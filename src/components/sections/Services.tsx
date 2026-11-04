@@ -1,10 +1,10 @@
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 import { SignatureWrite } from "@/components/ui/SignatureWrite";
-import { Tilt } from "@/components/ui/Tilt";
 import { WordsRise } from "@/components/ui/WordsRise";
 import { NOT_SURE_ID, services, type ServiceAccent } from "@/data/services";
 import { InquireLink, SelectServiceButton } from "./InquireLink";
+import { ServiceRows } from "./ServiceRows";
 
 // Static class names so Tailwind can see them.
 const accentSurface: Record<ServiceAccent, string> = {
@@ -14,13 +14,13 @@ const accentSurface: Record<ServiceAccent, string> = {
   lilac: "bg-lilac",
 };
 
+/**
+ * Services as an editorial index: four ruled rows, 01 to 04. Every row's content is always
+ * visible; on hover its pastel sheet rises behind it (transform only) and the arrow turns.
+ */
 export function Services() {
   return (
-    <section
-      id="services"
-      aria-labelledby="services-title"
-      className="relative py-24 sm:py-32"
-    >
+    <section id="services" aria-labelledby="services-title" className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-8">
         <div className="grid gap-8 md:grid-cols-12 md:items-end">
           <div className="md:col-span-8">
@@ -29,69 +29,68 @@ export function Services() {
               className="font-display text-[clamp(2.4rem,6.5vw,5rem)] leading-[1.02] font-medium tracking-tight text-ink"
             >
               <WordsRise text="Here's what we can work on" />{" "}
-              <SignatureWrite className="font-script font-normal text-pink">
-                together
-              </SignatureWrite>
+              <SignatureWrite className="font-script font-normal text-pink">together</SignatureWrite>
             </h2>
           </div>
           <Reveal delay={120} className="md:col-span-4 md:pb-3">
             <p className="max-w-sm text-base leading-relaxed text-ink-soft md:ml-auto">
-              Pick a starting point below. Each one opens a conversation, and
-              every plan is shaped around you.
+              Pick a starting point below. Each one opens a conversation, and every plan is shaped
+              around you.
             </p>
           </Reveal>
         </div>
 
-        <ol className="mt-14 grid gap-4 sm:mt-20 sm:gap-5 md:grid-cols-2">
+        <ServiceRows>
           {services.map((service, i) => (
-            <Reveal
-              as="li"
-              key={service.id}
-              delay={(i % 2) * 120}
-              className="flex"
-            >
-              <Tilt className="flex w-full">
-                <article
-                  className={`group/card relative flex w-full flex-col overflow-hidden rounded-[1.75rem] p-6 pb-7 transition-transform duration-500 ease-(--ease-out-expo) hover:-translate-y-1.5 sm:rounded-[2.25rem] sm:p-10 ${accentSurface[service.accent]}`}
+            <li key={service.id} data-row className="group/card relative isolate">
+              {/* The ink rule that draws in on scroll */}
+              <span
+                aria-hidden="true"
+                data-rule
+                className="absolute inset-x-0 top-0 h-px origin-left bg-ink/15"
+              />
+              {/* The pastel sheet that rises behind the row on hover */}
+              <span
+                aria-hidden="true"
+                className={`absolute inset-x-0 inset-y-2 -z-10 origin-bottom scale-y-0 rounded-[1.75rem] transition-transform duration-700 ease-(--ease-out-expo) group-hover/card:scale-y-100 ${accentSurface[service.accent]}`}
+              />
+
+              <article className="grid gap-x-10 gap-y-4 px-1 py-9 sm:px-6 sm:py-11 lg:grid-cols-[minmax(0,7rem)_minmax(0,1.15fr)_minmax(0,1fr)_auto] lg:items-center lg:py-12">
+                <div data-rise className="flex items-center gap-4">
+                  <span
+                    aria-hidden="true"
+                    className="font-display text-[clamp(2.6rem,5vw,4.5rem)] leading-none font-light tracking-tighter text-ink transition-transform duration-700 ease-(--ease-out-expo) group-hover/card:translate-x-2"
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`size-3 rounded-full ring-1 ring-ink/10 lg:hidden ${accentSurface[service.accent]}`}
+                  />
+                </div>
+
+                <h3
+                  data-rise
+                  className="max-w-md font-display text-2xl leading-tight font-semibold tracking-tight text-balance text-ink sm:text-[1.9rem]"
                 >
-                  <div className="flex items-start justify-between gap-6">
-                    <span
-                      aria-hidden="true"
-                      className="font-display text-[clamp(3rem,9vw,6rem)] leading-none font-light tracking-tighter text-ink"
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className="mt-2 size-2.5 rounded-full bg-pink opacity-0 transition-opacity duration-300 group-hover/card:opacity-100"
-                    />
-                  </div>
+                  {service.title}
+                </h3>
 
-                  <h3 className="mt-8 max-w-md font-display text-2xl leading-tight font-semibold tracking-tight text-ink sm:mt-20 sm:text-[1.9rem]">
-                    {service.title}
-                  </h3>
-                  <p className="mt-4 max-w-md text-base leading-relaxed text-ink/80">
-                    {service.description}
-                  </p>
+                <p data-rise className="max-w-md text-base leading-relaxed text-ink-soft">
+                  {service.description}
+                </p>
 
-                  <div className="mt-auto pt-8 sm:pt-10">
-                    <InquireLink
-                      serviceId={service.id}
-                      serviceTitle={service.title}
-                    />
-                  </div>
-                </article>
-              </Tilt>
-            </Reveal>
+                <div data-rise className="pt-2 lg:pt-0">
+                  <InquireLink serviceId={service.id} serviceTitle={service.title} />
+                </div>
+              </article>
+            </li>
           ))}
-        </ol>
+        </ServiceRows>
 
-        <Reveal className="mt-16 flex flex-col items-start gap-6 border-t border-ink/10 pt-10 sm:mt-20 sm:flex-row sm:items-center sm:justify-between">
+        <Reveal className="mt-14 flex flex-col items-start gap-6 sm:mt-16 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-display text-2xl leading-snug font-light tracking-tight text-ink sm:text-3xl">
-            Not sure where to begin?{" "}
-            <span className="text-ink-soft">
-              Let&apos;s figure it out together.
-            </span>
+            Not sure where to begin? <span className="text-ink-soft">Let&apos;s figure it out together.</span>
           </p>
           <SelectServiceButton serviceId={NOT_SURE_ID} className="shrink-0">
             Help Me Choose

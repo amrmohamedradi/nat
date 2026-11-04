@@ -79,13 +79,13 @@ spacing:
   section-lg: "128px"
 components:
   button-primary:
-    backgroundColor: "{colors.ink}"
+    backgroundColor: "{colors.pink-deep}"
     textColor: "{colors.cream}"
     rounded: "{rounded.pill}"
     padding: "0 24px"
     height: "48px"
   button-primary-hover:
-    backgroundColor: "{colors.pink-deep}"
+    backgroundColor: "{colors.ink}"
     textColor: "{colors.cream}"
   button-ghost:
     textColor: "{colors.ink}"
@@ -100,11 +100,10 @@ components:
   inquire-pill-hover:
     backgroundColor: "{colors.ink}"
     textColor: "{colors.cream}"
-  service-card:
+  service-row-hover:
     backgroundColor: "{colors.butter}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.card-lg}"
-    padding: "{spacing.card-pad-lg}"
+    rounded: "{rounded.card}"
   input:
     backgroundColor: "{colors.field}"
     textColor: "{colors.ink}"
@@ -150,7 +149,7 @@ A letter palette: deep teal-ink on warm cream paper, one pink for the signature,
 - **Signature Pink** (pink): the signature. Script "Nat." and script accents, the active-nav dot, the card hover dot, text selection. Large type and marks only.
 
 ### Secondary
-- **Pressed Pink** (pink-deep): pink that can carry small text. Error messages, required asterisks, numeral labels, focus rings, primary-button hover.
+- **Pressed Pink** (pink-deep): pink that can carry small text and fill buttons. Every primary button (cream text at 5:1), error messages, required asterisks, numeral labels, focus rings.
 
 ### Tertiary
 - **Butter Sheet** (butter): service 01, footer link and CTA hover, the preselected-service highlight in the form.
@@ -194,7 +193,7 @@ A letter palette: deep teal-ink on warm cream paper, one pink for the signature,
 
 ## Layout
 
-Single column on mobile with 16px gutters, 32px from `sm`; content sits in a 1280px (max-w-7xl) frame, with the contact section narrower at 1152px. The hero is a centred stage: Nat in the middle, the greeting around her, subtitle and buttons bottom left, tagline and handle bottom right (stacked under her on mobile). Below it, asymmetric compositions: services intro on a 12-column grid (8 + 4), contact at 5fr / 7fr with the intro sticky. Sections breathe at 96px vertical padding, 128px from `sm`. Fixed 72 to 80px header; anchors offset by 6rem. Mobile-first: no horizontal scroll, tap targets at least 44px, inputs at 16px so iOS does not zoom. On a 375 by 812 phone, Nat's face, the full greeting and the primary button all sit in the first screen.
+Single column on mobile with 16px gutters, 32px from `sm`; content sits in a 1280px (max-w-7xl) frame, with the contact section narrower at 1152px. The hero's cut-out fades to transparent over its bottom 18%, so the portrait melts into the services section instead of ending on a hard waist line; on scroll she only scales slightly from her base (no vertical drift) and the pointer turn is left/right only, so no gap opens beneath her. The hero is a centred stage: Nat in the middle, the greeting around her, subtitle and buttons bottom left, tagline and handle bottom right (stacked under her on mobile). Below it, asymmetric compositions: services intro on a 12-column grid (8 + 4), contact at 5fr / 7fr with the intro sticky. Sections breathe at 96px vertical padding, 128px from `sm`. Fixed 72 to 80px header; anchors offset by 6rem. Mobile-first: no horizontal scroll, tap targets at least 44px, inputs at 16px so iOS does not zoom. On a 375 by 812 phone, Nat's face, the full greeting and the primary button all sit in the first screen. Past 1680px the root font size grows smoothly (to 26px by about 2560px), so type, spacing, containers and the hero all scale together on large monitors.
 
 **The Margin Rule.** Leave space like a letter leaves margins; spacing varies by section role rather than repeating one padding everywhere.
 
@@ -222,8 +221,8 @@ Soft and confident: rounded, plump forms with crisp, decisive feedback.
 
 ### Buttons
 - **Shape:** full pill (9999px), 48px tall (52px from `sm`).
-- **Primary:** ink with cream text, padding 24px (28px from `sm`), Graphik 500 at 0.95rem; pressed-ink shadow. The general call to action is always "Work With Me".
-- **Hover / Focus:** background turns pink-deep over 300ms ease-out-quart; trailing arrow nudges up-right; press scales to 0.97; focus shows a 2px pink-deep outline offset 3px.
+- **Primary:** brand pink (pink-deep) with cream text, padding 24px (28px from `sm`), Graphik 500 at 0.95rem; a pink-tinted shadow (`shadow-pink`). Plain pink is not used as a fill: cream on it is only 3.2:1. The general call to action is always "Work With Me".
+- **Hover / Focus:** background turns ink (with the ink shadow) over 300ms ease-out-quart; trailing arrow nudges up-right; press scales to 0.97; focus shows a 2px pink-deep outline offset 3px.
 - **Ghost:** ink text with a 20% ink ring that becomes solid ink on hover.
 - **Footer CTA:** cream pill on the ink footer, turns butter on hover.
 
@@ -242,11 +241,10 @@ Each layer nests three wrappers (pointer, scroll, entrance) so the motions never
 ### Inquire Pill
 Outlined pill with "Inquire" text and an ink circle holding an arrow. On hover the pill fills ink, the circle turns pink with ink arrow; hovering the card rotates the arrow 45 degrees. It jumps to the form panel itself (`#inquiry`), preselects the service, flashes the field butter with a pink-deep ring for about 1.8s and announces the choice. "Help Me Choose" does the same with "Not sure yet, help me choose".
 
-### Cards / Containers
-- **Corner Style:** 1.75rem, 2.25rem from `sm`.
-- **Background:** one pastel sheet per service (butter, lime, sky, lilac).
-- **Shadow Strategy:** none; lift 6px on hover over 500ms ease-out-expo, a small pink dot appearing top right, and a gentle 3D tilt toward the pointer (`Tilt`, up to 5 degrees, fine pointers only).
-- **Internal Padding:** 24px, 40px from `sm`; huge light numeral top left, title and description below, inquire pill at the bottom.
+### Services Index
+The services are an editorial index, not cards: four full-width ruled rows, 01 to 04. From 1024px each row is one line of four columns (numeral, title, description, Inquire); below that they stack, with a small pastel dot beside the numeral. Every row's content is always visible (no hover-only information).
+- **Entrance (`ServiceRows`):** as a row scrolls in, its ink rule draws left to right, then numeral, title, copy and button rise 50ms apart; rows arriving together cascade 120ms apart.
+- **Hover:** the row's pastel sheet (1.75rem radius, inset 8px top and bottom) rises from the bottom behind it (`scale-y`, 700ms ease-out-expo), the numeral slides 8px right and the Inquire arrow turns 45 degrees. Transform only; touch devices never see hover.
 - **Contact panel:** writing paper at 80% with a 10% ink ring, 1.5rem radius, resting-panel shadow.
 
 ### Inputs / Fields
@@ -273,7 +271,7 @@ Outlined pill with "Inquire" text and an ink circle holding an arrow. On hover t
 - **Don't** use gradients beyond the barest soft blur, or glass effects as decoration.
 - **Don't** set body copy, buttons or labels in the script face.
 - **Don't** add stock illustrations, invented stats, testimonials, clients or social links.
-- **Don't** float cards with shadows; cards are flat tinted sheets.
+- **Don't** float cards with shadows; tinted sheets are flat.
 - **Don't** put eyebrow labels or kickers above headings.
 - **Don't** surround the portrait with decorative suns, dots, tags or a script watermark.
 - **Don't** put Nat in a frame, circle or arch in the hero; she stands cut out on the page.

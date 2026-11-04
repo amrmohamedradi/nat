@@ -69,7 +69,8 @@ export function Hero() {
         // Scrolling away: the sentence parts around her, the portrait sinks.
         const scrub = { trigger: root.current, start: "top top", end: "bottom top", scrub: 0.6 };
         gsap.to(q("[data-scroll='greeting']"), { xPercent: -14, yPercent: -40, ease: "none", scrollTrigger: scrub });
-        gsap.to(q("[data-scroll='photo']"), { yPercent: 10, scale: 0.96, ease: "none", scrollTrigger: scrub });
+        // Nat stays planted on the section edge (no vertical drift), so no gap ever opens beneath her.
+        gsap.to(q("[data-scroll='photo']"), { scale: 0.97, ease: "none", scrollTrigger: scrub });
         gsap.to(q("[data-scroll='signature']"), { xPercent: 12, yPercent: -60, ease: "none", scrollTrigger: scrub });
       });
 
@@ -84,8 +85,8 @@ export function Hero() {
             depth,
             x: gsap.quickTo(el, "x", { duration: 1, ease: "power3.out" }),
             y: gsap.quickTo(el, "y", { duration: 1, ease: "power3.out" }),
+            // Turn left/right only: tilting forward/back would lift her base off the section edge.
             ry: tilt ? gsap.quickTo(el, "rotationY", { duration: 1.2, ease: "power3.out" }) : null,
-            rx: tilt ? gsap.quickTo(el, "rotationX", { duration: 1.2, ease: "power3.out" }) : null,
           };
         });
         const move = (e: PointerEvent) => {
@@ -94,9 +95,9 @@ export function Hero() {
           const ny = (e.clientY - r.top) / r.height - 0.5;
           for (const l of layers) {
             l.x(nx * l.depth);
-            l.y(ny * l.depth * 0.6);
+            // The portrait (tilt layer) only moves sideways; vertical drift would open a gap at its base.
+            if (!l.ry) l.y(ny * l.depth * 0.6);
             l.ry?.(nx * 8);
-            l.rx?.(-ny * 5);
           }
         };
         const leave = () => {
@@ -104,7 +105,6 @@ export function Hero() {
             l.x(0);
             l.y(0);
             l.ry?.(0);
-            l.rx?.(0);
           }
         };
         section.addEventListener("pointermove", move);
@@ -151,8 +151,8 @@ export function Hero() {
                 width={913}
                 height={1223}
                 preload
-                sizes="(min-width: 1024px) 42rem, 100vw"
-                className="h-full w-auto max-w-none select-none"
+                sizes="(min-width: 1024px) 64vh, 100vw"
+                className="hero-cutout h-full w-auto max-w-none select-none"
                 draggable={false}
               />
             </div>

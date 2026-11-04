@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-color",
+        "value": "#000",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-11-04T14:50:11.803Z",
+        "reason": "Claude: mask-image gradients read alpha only; #000 is the opaque mask stop, not a visible color"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "clamp(16px, calc(16px (100vw - 1680px) * 0.0115), 26px)",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-11-04T14:50:15.270Z",
+        "reason": "Claude: root font-size scaling for large screens, not a type-ramp size"
+      }
+    ]
+  }
+}
