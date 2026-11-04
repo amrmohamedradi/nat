@@ -3,7 +3,6 @@ import { InquiryForm } from "@/components/inquiry/InquiryForm";
 import { Reveal } from "@/components/ui/Reveal";
 import { SignatureWrite } from "@/components/ui/SignatureWrite";
 import { StaggerIn } from "@/components/ui/StaggerIn";
-import { WordsRise } from "@/components/ui/WordsRise";
 import { site } from "@/data/site";
 import { INQUIRY_ANCHOR } from "@/lib/select-service";
 
@@ -25,7 +24,7 @@ export function ContactSection() {
             id="contact-title"
             className="font-display text-4xl leading-[1.05] font-medium tracking-tight text-balance text-ink sm:text-5xl lg:text-6xl"
           >
-            <WordsRise text="Let's work together." />
+            Let&apos;s work together.
           </h2>
           <p className="mt-6 max-w-md text-base leading-relaxed text-ink-soft sm:text-lg">
             Tell me about your brand and what you&apos;d like to build. I&apos;ll reply to the email you
@@ -55,16 +54,8 @@ export function ContactSection() {
 
         <StaggerIn
           id={INQUIRY_ANCHOR}
-          items="[data-field], [data-letterhead]"
           className="rounded-[2rem] bg-cream p-5 shadow-panel ring-1 ring-ink/10 sm:p-8 lg:p-10"
         >
-          {/* Letterhead: the visitor's reply opens like a letter. */}
-          <div data-letterhead className="mb-8 flex items-end justify-between gap-4 border-b border-ink/10 pb-5">
-            <p className="font-display text-2xl leading-none font-light tracking-tight text-ink sm:text-3xl">
-              Dear Nat,
-            </p>
-            <p className="text-sm text-ink-soft">I reply by email</p>
-          </div>
           <InquiryForm />
         </StaggerIn>
       </div>

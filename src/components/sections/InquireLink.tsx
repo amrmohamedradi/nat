@@ -16,7 +16,7 @@ export function InquireLink({ serviceId, serviceTitle }: InquireLinkProps) {
     <a
       href={`#${INQUIRY_ANCHOR}`}
       onClick={() => selectService(serviceId)}
-      className="group/inquire inline-flex h-12 items-center gap-3 rounded-full py-1 pr-1 pl-5 text-[0.95rem] font-medium text-ink ring-1 ring-ink/15 transition-[background-color,box-shadow] duration-300 ease-(--ease-out-quart) hover:bg-ink hover:text-cream hover:ring-ink active:scale-[0.97]"
+      className="group/inquire inline-flex h-12 items-center gap-3 rounded-full py-1 pr-1 pl-5 text-[0.95rem] font-medium text-ink ring-1 ring-ink/35 transition-[background-color,box-shadow] duration-300 ease-(--ease-out-quart) hover:bg-ink hover:text-cream hover:ring-ink active:scale-[0.97]"
     >
       Inquire<span className="sr-only"> about {serviceTitle}</span>
       <span

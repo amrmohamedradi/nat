@@ -1,7 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import { Reveal } from "@/components/ui/Reveal";
 import { SignatureWrite } from "@/components/ui/SignatureWrite";
-import { WordsRise } from "@/components/ui/WordsRise";
 import { NOT_SURE_ID, services, type ServiceAccent } from "@/data/services";
 import { InquireLink, SelectServiceButton } from "./InquireLink";
 import { ServiceRows } from "./ServiceRows";
@@ -26,18 +24,18 @@ export function Services() {
           <div className="md:col-span-8">
             <h2
               id="services-title"
-              className="font-display text-[clamp(2.4rem,6.5vw,5rem)] leading-[1.02] font-medium tracking-tight text-ink"
+              className="font-display text-[clamp(2.4rem,6.5vw,5rem)] leading-[1.02] font-medium tracking-tight text-balance text-ink"
             >
-              <WordsRise text="Here's what we can work on" />{" "}
+              Here&apos;s what we can work on{" "}
               <SignatureWrite className="font-script font-normal text-pink">together</SignatureWrite>
             </h2>
           </div>
-          <Reveal delay={120} className="md:col-span-4 md:pb-3">
+          <div className="md:col-span-4 md:pb-3">
             <p className="max-w-sm text-base leading-relaxed text-ink-soft md:ml-auto">
               Pick a starting point below. Each one opens a conversation, and every plan is shaped
               around you.
             </p>
-          </Reveal>
+          </div>
         </div>
 
         <ServiceRows>
@@ -52,10 +50,10 @@ export function Services() {
               {/* The pastel sheet that rises behind the row on hover */}
               <span
                 aria-hidden="true"
-                className={`absolute inset-x-0 inset-y-2 -z-10 origin-bottom scale-y-0 rounded-[1.75rem] transition-transform duration-700 ease-(--ease-out-expo) group-hover/card:scale-y-100 ${accentSurface[service.accent]}`}
+                className={`absolute inset-x-0 inset-y-2 -z-10 origin-bottom rounded-[1.75rem] transition-transform duration-700 ease-(--ease-out-expo) lg:scale-y-0 lg:group-hover/card:scale-y-100 ${accentSurface[service.accent]}`}
               />
 
-              <article className="grid gap-x-10 gap-y-4 px-1 py-9 sm:px-6 sm:py-11 lg:grid-cols-[minmax(0,7rem)_minmax(0,1.15fr)_minmax(0,1fr)_auto] lg:items-center lg:py-12">
+              <article className="grid gap-x-10 gap-y-4 px-5 py-9 sm:px-6 sm:py-11 lg:grid-cols-[minmax(0,7rem)_minmax(0,1.15fr)_minmax(0,1fr)_auto] lg:items-center lg:py-12">
                 <div data-rise className="flex items-center gap-4">
                   <span
                     aria-hidden="true"
@@ -63,10 +61,6 @@ export function Services() {
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span
-                    aria-hidden="true"
-                    className={`size-3 rounded-full ring-1 ring-ink/10 lg:hidden ${accentSurface[service.accent]}`}
-                  />
                 </div>
 
                 <h3
@@ -88,7 +82,7 @@ export function Services() {
           ))}
         </ServiceRows>
 
-        <Reveal className="mt-14 flex flex-col items-start gap-6 sm:mt-16 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col items-start gap-6 sm:mt-16 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-display text-2xl leading-snug font-light tracking-tight text-ink sm:text-3xl">
             Not sure where to begin? <span className="text-ink-soft">Let&apos;s figure it out together.</span>
           </p>
@@ -99,7 +93,7 @@ export function Services() {
               className="size-4 transition-transform duration-300 ease-(--ease-out-quart) group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
           </SelectServiceButton>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

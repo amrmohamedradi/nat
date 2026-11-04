@@ -5,7 +5,7 @@ const inquiry = {
   fullName: "Test Client",
   instagram: "test.client",
   email: "test@example.com",
-  service: "branding-packaging" as const,
+  services: ["branding-packaging" as const],
   message: "Hello\nsecond line",
 };
 const submittedAt = new Date("2026-11-04T12:30:00Z");
@@ -19,6 +19,16 @@ describe("buildInquiryEmail", () => {
     expect(text).toContain("Email: test@example.com");
     expect(text).toContain("Service: Branding & Packaging Design");
     expect(text).toContain("Hello\nsecond line");
+  });
+
+  it("lists every chosen service", () => {
+    const { text, html } = buildInquiryEmail(
+      { ...inquiry, services: ["consultations-strategy", "not-sure"] },
+      submittedAt,
+    );
+
+    expect(text).toContain("Services: Consultations & Strategy Building, Not sure yet, help me choose");
+    expect(html).toContain("Consultations &amp; Strategy Building<br>Not sure yet, help me choose");
   });
 
   it("shows the submission time in Cairo time and in UTC", () => {

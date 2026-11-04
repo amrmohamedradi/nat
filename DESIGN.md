@@ -152,7 +152,7 @@ A letter palette: deep teal-ink on warm cream paper, one pink for the signature,
 - **Pressed Pink** (pink-deep): pink that can carry small text and fill buttons. Every primary button (cream text at 5:1), error messages, required asterisks, numeral labels, focus rings.
 
 ### Tertiary
-- **Butter Sheet** (butter): service 01, footer link and CTA hover, the preselected-service highlight in the form.
+- **Butter Sheet** (butter): service 01, footer link and CTA hover.
 - **Lime Sheet** (lime): service 02.
 - **Sky Sheet** (sky): service 03.
 - **Lilac Sheet** (lilac): service 04.
@@ -223,8 +223,9 @@ Soft and confident: rounded, plump forms with crisp, decisive feedback.
 - **Shape:** full pill (9999px), 48px tall (52px from `sm`).
 - **Primary:** brand pink (pink-deep) with cream text, padding 24px (28px from `sm`), Graphik 500 at 0.95rem; a pink-tinted shadow (`shadow-pink`). Plain pink is not used as a fill: cream on it is only 3.2:1. The general call to action is always "Work With Me".
 - **Hover / Focus:** background turns ink (with the ink shadow) over 300ms ease-out-quart; trailing arrow nudges up-right; press scales to 0.97; focus shows a 2px pink-deep outline offset 3px.
-- **Ghost:** ink text with a 20% ink ring that becomes solid ink on hover.
-- **Footer CTA:** cream pill on the ink footer, turns butter on hover.
+- **Ghost:** cream fill with ink text and a 35% ink ring (3:1 boundary) that becomes solid ink on hover; reads on any surface without patches.
+- **On ink (`onInk`):** cream pill on the ink footer, butter on hover. All three variants come from `buttonClasses()`; no hand-built pills.
+- **Destination:** every "Work With Me" lands on the form panel itself (`#inquiry`), not the section heading above it.
 
 ### Hello Stage (signature)
 Three layers sized from `--ph` (the portrait's rendered height), reading as one sentence. From 1024px: "Hello, / this is" in ink script on the left, right-aligned and just touching her hair; Nat's cut-out in the middle; the pink "Nat." on the right in front of her hair, on the "this is" line, so her face sits inside the sentence. On phones and tablets: "Hello, this is" on one line above her head, fully readable, and "Nat." large across her arms. Copy goes bottom left on desktop and under her on smaller screens. The h1 is screen-reader text; the visual words are aria-hidden.
@@ -236,7 +237,7 @@ Motion (GSAP, all off under reduced motion):
 Each layer nests three wrappers (pointer, scroll, entrance) so the motions never share a transform. Layers are hidden until the entrance runs only when `scripting: enabled`, with a CSS failsafe that lands them on their finished state after 3.4s.
 
 ### Signature Write
-`SignatureWrite` writes script text in with the same feathered ink stroke when it scrolls into view: "together" in the services heading and the "Nat." of the contact sign-off. Section headings (`WordsRise`) rise in word by word out of their own line, 40ms apart. A 2px pink line under the header fills with scroll progress.
+`SignatureWrite` writes script text in with the same feathered ink stroke when it scrolls into view: "together" in the services heading and the "Nat." of the contact sign-off and the footer. **The One Moment Rule:** each view below the hero gets one authored motion: services, the rules drawing in (plus the "together" stroke); contact, the panel rising; footer, the final "Nat.". Headings do not animate on their own. Scroll reveals animate opacity and transform only, never visibility, so nothing becomes unfocusable while waiting for its trigger. A 2px pink line under the header fills with scroll progress.
 
 ### Inquire Pill
 Outlined pill with "Inquire" text and an ink circle holding an arrow. On hover the pill fills ink, the circle turns pink with ink arrow; hovering the card rotates the arrow 45 degrees. It jumps to the form panel itself (`#inquiry`), preselects the service, flashes the field butter with a pink-deep ring for about 1.8s and announces the choice. "Help Me Choose" does the same with "Not sure yet, help me choose".
@@ -244,8 +245,8 @@ Outlined pill with "Inquire" text and an ink circle holding an arrow. On hover t
 ### Services Index
 The services are an editorial index, not cards: four full-width ruled rows, 01 to 04. From 1024px each row is one line of four columns (numeral, title, description, Inquire); below that they stack, with a small pastel dot beside the numeral. Every row's content is always visible (no hover-only information).
 - **Entrance (`ServiceRows`):** as a row scrolls in, its ink rule draws left to right, then numeral, title, copy and button rise 50ms apart; rows arriving together cascade 120ms apart.
-- **Hover:** the row's pastel sheet (1.75rem radius, inset 8px top and bottom) rises from the bottom behind it (`scale-y`, 700ms ease-out-expo), the numeral slides 8px right and the Inquire arrow turns 45 degrees. Transform only; touch devices never see hover.
-- **Contact sheet:** the contact section is its own sheet: deeper paper (`paper`) with a 2.5rem rounded top (3.5rem from `sm`) after the services. The form panel on it is the visitor's reply: cream, 2rem radius, 10% ink ring, resting-panel shadow, opening with a letterhead ("Dear Nat," in Aloevera Light over a hairline rule, "I reply by email" on the right). On scroll the panel rises in and the letterhead and fields follow 50ms apart (`StaggerIn`).
+- **Surface:** below 1024px (touch) each row sits on its pastel sheet at rest, so the stationery shows on phones; from 1024px the sheet rises from the bottom behind the row on hover (`scale-y`, 700ms ease-out-expo), the numeral slides 8px right and the Inquire arrow turns 45 degrees. Transform only.
+- **Contact sheet:** the contact section is its own sheet: deeper paper (`paper`) with a 2.5rem rounded top (3.5rem from `sm`) after the services. The form panel on it is the visitor's reply: cream, 2rem radius, 10% ink ring, resting-panel shadow, rising in once on scroll. The form opens with a letterhead ("Dear Nat," in Aloevera Light over a hairline rule, "I reply by email" on the right) that belongs to the form and leaves with it: after sending, the panel shows Nat's thank-you and an Instagram link, with no second script signature.
 
 ### Inputs / Fields
 - **Style:** writing-paper field, 0.75rem radius, inset 40% ink ring (60% on hover), 52px tall, 16px text.
@@ -254,16 +255,17 @@ The services are an editorial index, not cards: four full-width ruled rows, 01 t
 - **Labels:** Graphik 500 at 0.875rem in ink; optional hints in ink-soft.
 
 ### Service Chips
-The service question is a radio group of pills, never a dropdown: all five choices (the four services and "Not sure yet, help me choose") are visible at once and take one tap. Each pill is a real radio input under a styled label: writing-paper fill, 25% ink ring, a dot in the service's pastel (an empty ring for "Not sure yet"), at least 44px tall. Selected: the pill fills with that service's pastel (deep paper for "Not sure yet"), the ring turns ink and a check appears in the dot. Keyboard focus shows the pink-deep ring and halo. "Inquire" and "Help Me Choose" preselect a pill and briefly halo the group.
+The services question is a group of pills (named by its visible label "Services interested in (choose any)", never a dropdown): all five choices are visible at once and visitors can pick several. Each pill is a real checkbox under a styled label: writing-paper fill, 45% ink ring, a small rounded-square marker in the service's pastel (an empty outline for "Not sure yet"; square, not round, because round markers read as choose-one), at least 44px tall. Selected: the pill fills with that service's pastel (deep paper for "Not sure yet"), the ring turns ink and a check appears in the marker. "Not sure yet" stands alone: picking it clears the services, and picking a service clears it. The email lists every chosen service. Keyboard focus shows the pink-deep ring and halo. "Inquire" and "Help Me Choose" add their pill to the selection (never replacing earlier picks) and ring it in pink-deep with a halo for about 1.8s. Text fields use a 60% ink ring (80% on hover) and a pink-deep caret.
 
 ### Navigation
 - **Desktop:** Aloevera Display at 0.95rem; ink-soft, ink on hover and when active; the active link gets a small pink dot beneath it, and hovering an inactive link previews that dot at half strength. Header is transparent over the hero and becomes 85% cream with blur and a hairline rule once scrolled, with the 2px pink reading-progress line along its bottom. It tucks up out of view while the visitor reads downward and slides back on any scroll up; it never hides within 160px of the top, while the mobile menu is open, or while keyboard focus is inside it.
-- **Mobile:** a compact "Work With Me" pill (44px) stays beside a two-line burger that folds into an ×; a full-height cream sheet listing links at 2.6rem with pink-deep 01 to 03 numerals, the tagline, a full-width primary button and the Instagram handle.
+- **Mobile:** a compact "Work With Me" pill (44px) sits beside a two-line burger that folds into an × (the pill hides while the menu is open, so there is one CTA). The full-height cream sheet fades down into place and lists links at 2.6rem with large light pink-deep 01 to 03 numerals, then the tagline ending in the pink script "Nat.", a full-width primary button and the underlined Instagram handle.
+- **Browser surfaces:** focus is a 2px pink-deep outline 3px out that follows each element's own radius; `accent-color` is pink-deep and the scrollbar is ink at 35% on cream.
 
 ### Footer (the last page)
-Ink, cream text. It opens with the closing line "Your vision with a touch of *Nat.*" in Aloevera Light (up to 6rem); the words rise in and "Nat." writes itself in pink script as the letter's final signature (no script watermark, so it stays the only script moment). Below a cream hairline: the white logo and the cream "Work With Me" pill (hover butter), then "Explore" and "Follow" lists whose labels slide 6px on hover and turn butter (pink fails contrast on ink at that size). The bottom row holds the copyright and a 48px round back-to-top button that fills cream on hover.
+Ink, cream text. It opens with the closing line "Your vision with a touch of *Nat.*" in Aloevera Light (up to 6rem); "Nat." writes itself in pink script as the letter's final signature (no script watermark, so it stays the only script moment). Below a cream hairline: the white logo and the cream "Work With Me" pill (hover butter), then "Explore" and "Follow" lists whose labels slide 6px on hover and turn butter (pink fails contrast on ink at that size). The bottom row holds the copyright and a 48px round back-to-top button that fills cream on hover.
 
-On screens at least 1024px wide and 760px tall the footer is a curtain: it is pinned to the bottom of the viewport underneath the page (`.footer-curtain`), and the page sheet (`main`, cream, with the contact sheet's 3.5rem rounded bottom corners) lifts off it as you reach the end. Smaller screens keep a normal footer so nothing is hidden.
+On screens at least 1024px wide and 760px tall the footer is a curtain: it is pinned to the bottom of the viewport underneath the page (`.footer-curtain`), but only while the whole footer fits the viewport (`FooterCurtain` sets `data-fits`); when keyboard focus enters the footer the page jumps to its end so no focused link is left under the sheet, and the page sheet (`main`, cream, with the contact sheet's 3.5rem rounded bottom corners) lifts off it as you reach the end. Smaller screens keep a normal footer so nothing is hidden.
 
 ## Do's and Don'ts
 

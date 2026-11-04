@@ -13,7 +13,7 @@ The inquiry flow takes the contact form, validates it in the browser and again h
 | `src/lib/email/inquiry-email.ts` | Builds the HTML and plain text email (Cairo time plus UTC) |
 | `src/lib/rate-limit.ts` | In memory sliding window limiter |
 | `src/components/inquiry/InquiryForm.tsx` | Client form: inline errors, loading, success and error states |
-| `src/lib/select-service.ts` | Event that lets "Inquire" buttons preselect a service |
+| `src/lib/select-service.ts` | Event that lets "Inquire" buttons add a service to the form's selection (the form accepts several; field `services`) |
 
 ## Conventions
 

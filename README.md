@@ -41,7 +41,7 @@ If any of the three email variables is missing, the form shows *"Email service i
 yet"* — it never fakes success.
 
 The email: subject **"New Client Inquiry — Nat."**, reply-to set to the client, and it contains full
-name, Instagram (linked), email, selected service, project details, and the submission time (Cairo
+name, Instagram (linked), email, the chosen service(s), project details, and the submission time (Cairo
 time + UTC). HTML and plain-text versions; all client input is HTML-escaped.
 
 ## Spam protection
@@ -56,7 +56,7 @@ time + UTC). HTML and plain-text versions; all client input is HTML-escaped.
 
 | What | Where |
 |---|---|
-| Services (cards **and** form dropdown) | `src/data/services.ts` — keep each `id` unique |
+| Services (service rows **and** form choices) | `src/data/services.ts` — keep each `id` unique |
 | Headline, tagline, hero subtitle, Instagram, nav | `src/data/site.ts` |
 | Colors / motion tokens | `src/app/globals.css` (`@theme`) |
 | Fonts | `src/app/fonts.ts` (files in `src/fonts/`) |
