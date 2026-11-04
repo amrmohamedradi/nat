@@ -41,10 +41,23 @@ export const services = [
   },
 ] as const satisfies readonly Service[];
 
-export type ServiceId = (typeof services)[number]["id"];
+// Form-only choice for visitors who don't know where to start yet. Not shown as a service card.
+export const NOT_SURE_ID = "not-sure";
+export const NOT_SURE_TITLE = "Not sure yet, help me choose";
 
-export const serviceIds = services.map((s) => s.id) as [ServiceId, ...ServiceId[]];
+export type ServiceId = (typeof services)[number]["id"];
+export type ServiceChoice = ServiceId | typeof NOT_SURE_ID;
+
+export const serviceChoiceIds: [ServiceChoice, ...ServiceChoice[]] = [
+  NOT_SURE_ID,
+  ...services.map((s): ServiceChoice => s.id),
+];
 
 export function getService(id: string): Service | undefined {
   return services.find((s) => s.id === id);
+}
+
+/** Display title for any form choice, including "not sure yet". */
+export function getServiceTitle(id: string): string | undefined {
+  return id === NOT_SURE_ID ? NOT_SURE_TITLE : getService(id)?.title;
 }

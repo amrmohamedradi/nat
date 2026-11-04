@@ -1,0 +1,388 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-04T14:25:15.886Z",
+  "title": "Design System: Nat.",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "primary",
+        "displayName": "Letter Ink",
+        "canonical": "#063444",
+        "tonalRamp": [
+          "oklch(15.0% 0.018 227.0)",
+          "oklch(26.4% 0.039 227.0)",
+          "oklch(37.9% 0.055 227.0)",
+          "oklch(49.3% 0.055 227.0)",
+          "oklch(60.7% 0.055 227.0)",
+          "oklch(72.1% 0.051 227.0)",
+          "oklch(83.6% 0.030 227.0)",
+          "oklch(95.0% 0.009 227.0)"
+        ]
+      },
+      "pink": {
+        "role": "primary",
+        "displayName": "Signature Pink",
+        "canonical": "#eb5988",
+        "tonalRamp": [
+          "oklch(15.0% 0.061 3.6)",
+          "oklch(26.4% 0.131 3.6)",
+          "oklch(37.9% 0.184 3.6)",
+          "oklch(49.3% 0.184 3.6)",
+          "oklch(60.7% 0.184 3.6)",
+          "oklch(72.1% 0.171 3.6)",
+          "oklch(83.6% 0.101 3.6)",
+          "oklch(95.0% 0.031 3.6)"
+        ]
+      },
+      "pink-deep": {
+        "role": "secondary",
+        "displayName": "Pressed Pink",
+        "canonical": "#c13a68",
+        "tonalRamp": [
+          "oklch(15.0% 0.058 4.0)",
+          "oklch(26.4% 0.124 4.0)",
+          "oklch(37.9% 0.174 4.0)",
+          "oklch(49.3% 0.174 4.0)",
+          "oklch(60.7% 0.174 4.0)",
+          "oklch(72.1% 0.162 4.0)",
+          "oklch(83.6% 0.095 4.0)",
+          "oklch(95.0% 0.029 4.0)"
+        ]
+      },
+      "butter": {
+        "role": "tertiary",
+        "displayName": "Butter Sheet",
+        "canonical": "#faf097",
+        "tonalRamp": [
+          "oklch(15.0% 0.037 102.7)",
+          "oklch(26.4% 0.079 102.7)",
+          "oklch(37.9% 0.111 102.7)",
+          "oklch(49.3% 0.111 102.7)",
+          "oklch(60.7% 0.111 102.7)",
+          "oklch(72.1% 0.103 102.7)",
+          "oklch(83.6% 0.061 102.7)",
+          "oklch(95.0% 0.018 102.7)"
+        ]
+      },
+      "lime": {
+        "role": "tertiary",
+        "displayName": "Lime Sheet",
+        "canonical": "#d9e6ad",
+        "tonalRamp": [
+          "oklch(15.0% 0.025 118.4)",
+          "oklch(26.4% 0.054 118.4)",
+          "oklch(37.9% 0.076 118.4)",
+          "oklch(49.3% 0.076 118.4)",
+          "oklch(60.7% 0.076 118.4)",
+          "oklch(72.1% 0.071 118.4)",
+          "oklch(83.6% 0.042 118.4)",
+          "oklch(95.0% 0.013 118.4)"
+        ]
+      },
+      "sky": {
+        "role": "tertiary",
+        "displayName": "Sky Sheet",
+        "canonical": "#96d4e8",
+        "tonalRamp": [
+          "oklch(15.0% 0.023 220.0)",
+          "oklch(26.4% 0.049 220.0)",
+          "oklch(37.9% 0.069 220.0)",
+          "oklch(49.3% 0.069 220.0)",
+          "oklch(60.7% 0.069 220.0)",
+          "oklch(72.1% 0.064 220.0)",
+          "oklch(83.6% 0.038 220.0)",
+          "oklch(95.0% 0.011 220.0)"
+        ]
+      },
+      "lilac": {
+        "role": "tertiary",
+        "displayName": "Lilac Sheet",
+        "canonical": "#cac6e3",
+        "tonalRamp": [
+          "oklch(15.0% 0.013 291.8)",
+          "oklch(26.4% 0.029 291.8)",
+          "oklch(37.9% 0.040 291.8)",
+          "oklch(49.3% 0.040 291.8)",
+          "oklch(60.7% 0.040 291.8)",
+          "oklch(72.1% 0.037 291.8)",
+          "oklch(83.6% 0.022 291.8)",
+          "oklch(95.0% 0.007 291.8)"
+        ]
+      },
+      "cream": {
+        "role": "neutral",
+        "displayName": "Cream Paper",
+        "canonical": "#fffbf5",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 78.3)",
+          "oklch(26.4% 0.006 78.3)",
+          "oklch(37.9% 0.009 78.3)",
+          "oklch(49.3% 0.009 78.3)",
+          "oklch(60.7% 0.009 78.3)",
+          "oklch(72.1% 0.008 78.3)",
+          "oklch(83.6% 0.005 78.3)",
+          "oklch(95.0% 0.002 78.3)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Deep Paper",
+        "canonical": "#f7f0e6",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 77.1)",
+          "oklch(26.4% 0.011 77.1)",
+          "oklch(37.9% 0.015 77.1)",
+          "oklch(49.3% 0.015 77.1)",
+          "oklch(60.7% 0.015 77.1)",
+          "oklch(72.1% 0.014 77.1)",
+          "oklch(83.6% 0.008 77.1)",
+          "oklch(95.0% 0.003 77.1)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Faded Ink",
+        "canonical": "#2f5563",
+        "tonalRamp": [
+          "oklch(15.0% 0.016 223.9)",
+          "oklch(26.4% 0.035 223.9)",
+          "oklch(37.9% 0.049 223.9)",
+          "oklch(49.3% 0.049 223.9)",
+          "oklch(60.7% 0.049 223.9)",
+          "oklch(72.1% 0.046 223.9)",
+          "oklch(83.6% 0.027 223.9)",
+          "oklch(95.0% 0.008 223.9)"
+        ]
+      },
+      "field": {
+        "role": "neutral",
+        "displayName": "Writing Paper",
+        "canonical": "#fffefc",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 84.6)",
+          "oklch(26.4% 0.002 84.6)",
+          "oklch(37.9% 0.003 84.6)",
+          "oklch(49.3% 0.003 84.6)",
+          "oklch(60.7% 0.003 84.6)",
+          "oklch(72.1% 0.003 84.6)",
+          "oklch(83.6% 0.002 84.6)",
+          "oklch(95.0% 0.000 84.6)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "signature": {
+        "displayName": "Signature",
+        "purpose": "Script greeting (Nat. signs the photo), one script word inside a headline, the sign-offs. Large only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles in Aloevera Display."
+      },
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "Light 01 to 04 service numbers."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Reading text in Graphik, about 28rem per column."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Small uppercase list headings in the footer. Never an eyebrow above a heading."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Pill buttons and the inquire pill."
+      },
+      "nav": {
+        "displayName": "Nav",
+        "purpose": "Desktop navigation links."
+      },
+      "menu": {
+        "displayName": "Menu",
+        "purpose": "Links in the mobile menu sheet."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-panel",
+        "value": "0 30px 60px -40px rgb(6 52 68 / 0.35)",
+        "purpose": "Contact form panel."
+      },
+      {
+        "name": "shadow-ink",
+        "value": "0 1px 0 rgb(255 255 255 / 0.15) inset, 0 10px 24px -12px rgb(6 52 68 / 0.6)",
+        "purpose": "Primary button."
+      },
+      {
+        "name": "shadow-halo",
+        "value": "0 0 0 4px rgb(235 89 136 / 0.15)",
+        "purpose": "Focused form field, with a pink-deep ring."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Reveals, card lift, nav dot, sheet entrance."
+      },
+      {
+        "name": "ease-out-quart",
+        "value": "cubic-bezier(0.25, 1, 0.5, 1)",
+        "purpose": "Button, link and field state changes."
+      },
+      {
+        "name": "hero-entrance",
+        "value": "GSAP timeline: portrait rises out of a 12px blur (1.5s expo.out), words lift in, signature clip-path wipe (1.4s power2.inOut), copy",
+        "purpose": "The one authored entrance on the hero stage."
+      },
+      {
+        "name": "signature-write",
+        "value": "clip-path inset wipe left to right, 1.3s power2.inOut, once on scroll",
+        "purpose": "Script words writing themselves in."
+      },
+      {
+        "name": "reveal",
+        "value": "opacity + translateY(18px), 0.9s ease-out-expo",
+        "purpose": "Scroll-in entrance via Reveal; disabled under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ink pill for the main action (Work With Me, Send). Turns pink-deep on hover.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Let's Work Together <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 24px;border-radius:9999px;font-family:var(--font-sans);font-weight:500;font-size:0.95rem;letter-spacing:-0.025em;border:none;cursor:pointer;transition:background-color .3s var(--ease-out-quart),color .3s var(--ease-out-quart),box-shadow .3s var(--ease-out-quart),transform .3s var(--ease-out-quart);background:var(--color-ink);color:var(--color-cream);text-decoration:none;box-shadow:var(--shadow-ink);}.ds-btn-primary svg{transition:transform .3s var(--ease-out-quart);}.ds-btn-primary:hover{background:var(--color-pink-deep);}.ds-btn-primary:hover svg{transform:translate(2px,-2px);}.ds-btn-primary:active{transform:scale(.97);}.ds-btn-primary:focus-visible{outline:2px solid var(--color-pink-deep);outline-offset:3px;}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action beside a primary button (Explore services).",
+      "html": "<a class=\"ds-btn-ghost\" href=\"#\">Explore services</a>",
+      "css": ".ds-btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 24px;border-radius:9999px;font-family:var(--font-sans);font-weight:500;font-size:0.95rem;letter-spacing:-0.025em;border:none;cursor:pointer;transition:background-color .3s var(--ease-out-quart),color .3s var(--ease-out-quart),box-shadow .3s var(--ease-out-quart),transform .3s var(--ease-out-quart);background:transparent;color:var(--color-ink);text-decoration:none;box-shadow:inset 0 0 0 1px rgb(6 52 68/.2);}.ds-btn-ghost:hover{box-shadow:inset 0 0 0 1px var(--color-ink);background:rgb(6 52 68/.03);}.ds-btn-ghost:active{transform:scale(.97);}.ds-btn-ghost:focus-visible{outline:2px solid var(--color-pink-deep);outline-offset:3px;}"
+    },
+    {
+      "name": "Inquire Pill",
+      "kind": "custom",
+      "refersTo": "inquire-pill",
+      "description": "Per-service action that fills ink on hover and preselects the service in the form.",
+      "html": "<a class=\"ds-inquire\" href=\"#\">Inquire<span class=\"ds-inquire-dot\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></span></a>",
+      "css": ".ds-inquire{display:inline-flex;align-items:center;gap:12px;height:48px;padding:4px 4px 4px 20px;border-radius:9999px;font-family:var(--font-sans);font-weight:500;font-size:.95rem;color:var(--color-ink);text-decoration:none;box-shadow:inset 0 0 0 1px rgb(6 52 68/.15);transition:background-color .3s var(--ease-out-quart),color .3s var(--ease-out-quart);}.ds-inquire-dot{display:grid;place-items:center;width:40px;height:40px;border-radius:9999px;background:var(--color-ink);color:var(--color-cream);transition:background-color .5s var(--ease-out-expo),color .5s var(--ease-out-expo),transform .5s var(--ease-out-expo);}.ds-inquire:hover{background:var(--color-ink);color:var(--color-cream);}.ds-inquire:hover .ds-inquire-dot{background:var(--color-pink);color:var(--color-ink);transform:rotate(45deg);}.ds-inquire:active{transform:scale(.97);}.ds-inquire:focus-visible{outline:2px solid var(--color-pink-deep);outline-offset:3px;}"
+    },
+    {
+      "name": "Service Card",
+      "kind": "card",
+      "refersTo": "service-card",
+      "description": "Flat pastel sheet per service: huge light numeral, title, description, inquire pill. Lifts on hover.",
+      "html": "<article class=\"ds-service\"><div class=\"ds-service-top\"><span class=\"ds-service-num\">01</span><span class=\"ds-service-dot\"></span></div><h3>Consultations &amp; Strategy Building</h3><p>We pinpoint your challenges, uncover the opportunities, and build a clear plan to move forward.</p></article>",
+      "css": ".ds-service{max-width:420px;padding:40px;border-radius:2.25rem;background:var(--color-butter);color:var(--color-ink);transition:transform .5s var(--ease-out-expo);}.ds-service:hover{transform:translateY(-6px);}.ds-service-top{display:flex;justify-content:space-between;align-items:flex-start;}.ds-service-num{font-family:var(--font-display);font-weight:300;font-size:5rem;line-height:1;letter-spacing:-.05em;}.ds-service-dot{margin-top:8px;width:10px;height:10px;border-radius:9999px;background:var(--color-pink);opacity:0;transition:opacity .3s;}.ds-service:hover .ds-service-dot{opacity:1;}.ds-service h3{margin:56px 0 0;font-family:var(--font-display);font-weight:600;font-size:1.9rem;line-height:1.25;letter-spacing:-.025em;}.ds-service p{margin:16px 0 0;font-family:var(--font-sans);line-height:1.625;color:rgb(6 52 68/.8);}"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Inquiry form field: white, softly rounded, pink-deep focus ring with halo.",
+      "html": "<label class=\"ds-field\"><span>Full name <b>*</b></span><input class=\"ds-input\" placeholder=\"Your name\" /></label>",
+      "css": ".ds-field{display:block;max-width:360px;font-family:var(--font-sans);}.ds-field span{display:block;margin-bottom:8px;font-size:.875rem;font-weight:500;color:var(--color-ink);}.ds-field b{color:var(--color-pink-deep);font-weight:500;}.ds-input{width:100%;height:52px;padding:0 16px;border:none;border-radius:.75rem;background:var(--color-field);font:inherit;font-size:1rem;color:var(--color-ink);box-shadow:inset 0 0 0 1px rgb(6 52 68/.4);outline:none;transition:box-shadow .2s var(--ease-out-quart);}.ds-input::placeholder{color:rgb(47 85 99/.8);}.ds-input:hover{box-shadow:inset 0 0 0 1px rgb(6 52 68/.6);}.ds-input:focus-visible{box-shadow:inset 0 0 0 2px var(--color-pink-deep),var(--shadow-halo);}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Desktop nav in Aloevera Display; the active link carries a small pink dot.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link is-active\" href=\"#\">Home</a><a class=\"ds-nav-link\" href=\"#\">Services</a><a class=\"ds-nav-link\" href=\"#\">Contact</a></nav>",
+      "css": ".ds-nav{display:flex;gap:4px;}.ds-nav-link{position:relative;display:flex;align-items:center;height:44px;padding:0 16px;font-family:var(--font-display);font-size:.95rem;letter-spacing:.025em;color:var(--color-ink-soft);text-decoration:none;transition:color .3s;}.ds-nav-link:hover,.ds-nav-link.is-active{color:var(--color-ink);}.ds-nav-link::after{content:\"\";position:absolute;bottom:4px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:9999px;background:var(--color-pink);transform:scale(0);opacity:0;transition:transform .5s var(--ease-out-expo),opacity .5s var(--ease-out-expo);}.ds-nav-link.is-active::after{transform:scale(1);opacity:1;}.ds-nav-link:focus-visible{outline:2px solid var(--color-pink-deep);outline-offset:3px;}"
+    },
+    {
+      "name": "Signature Headline",
+      "kind": "custom",
+      "description": "The signature moment: ink script greeting, pink 'Nat.' as the signature.",
+      "html": "<h1 class=\"ds-signature\">Hello, this <span>Nat.</span></h1>",
+      "css": ".ds-signature{margin:0;font-family:var(--font-script);font-weight:400;font-size:4.5rem;line-height:1;color:var(--color-ink);}.ds-signature span{display:block;padding-left:.4em;font-size:1.5em;line-height:.8;color:var(--color-pink);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Signed Letter",
+    "overview": "Every page is a letter from Nat to the person reading it. Cream paper, ink type, generous margins, and one thing no template can copy: her signature, the pink calligraphic \"Nat.\" lifted from the logo. The script is used the way a signature is used: once or twice per view, large, at the moment of personal address (\"Hello, this is Nat.\", \"together\", the closing \"Nat.\"). Everything around it is calm, precise and set in ink so the signature lands.\n\nThe page reads like personal correspondence that happens to be beautifully typeset: a warm greeting spoken around Nat herself, a numbered list of what we can do together, and an invitation to write back that closes with \"Speak soon, Nat.\" Pastels (butter, lime, sky, lilac) are the stationery: flat tinted sheets, one per service, never gradients. Structure comes from fine ink rules, the 01 to 04 numbering that echoes the Instagram carousel, and strong scale contrast between huge script and small precise text. Headings carry their own weight: no eyebrow labels above them.\n\nThe visual system rejects template polish: no gradients, no glass cards as decoration, no stock illustration, no invented logos, stats or testimonials. If a section could appear on any consultant's site, it needs more Nat in it, usually through her words, her portrait or her signature, not more decoration.",
+    "keyCharacteristics": [
+      "Cream paper, ink type, pink signature.",
+      "Nat at the centre: one sentence, \"Hello, this is Nat.\", that her face interrupts; the pink \"Nat.\" finishes it in front of her.",
+      "Script only at moments of personal address, always large.",
+      "Ruled lines and 01 to 04 numbering as the letter's structure; no eyebrow labels.",
+      "Pastels as flat stationery tints, one per service.",
+      "Soft, confident pills and plump cards; crisp, decisive motion."
+    ],
+    "rules": [
+      {
+        "name": "The Signature Rule",
+        "body": "Plain pink never sets small text. Below about 24px, pink becomes pink-deep; pink stays for the script, marks and dots.",
+        "section": "colors"
+      },
+      {
+        "name": "The Stationery Rule",
+        "body": "Pastels are flat sheets, one tint per object. Never blend two in a gradient, never use them for text, never scatter them as decorative suns around the portrait.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Signature Rule",
+        "body": "The script appears where Nat speaks in first person or signs off. If it decorates a neutral word, remove it. It never addresses Nat (no \"Let's work together Nat.\").",
+        "section": "typography"
+      },
+      {
+        "name": "The No Eyebrow Rule",
+        "body": "Headings carry their own weight. No tracked uppercase kicker or pink-rule label above a section heading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Margin Rule",
+        "body": "Leave space like a letter leaves margins; spacing varies by section role rather than repeating one padding everywhere.",
+        "section": "layout"
+      },
+      {
+        "name": "The Desk Rule",
+        "body": "Only physical-feeling objects (form panel, primary button) cast a shadow. Cards are tinted sheets, not floating tiles.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the signature large and rare: script only for \"Hello, this is Nat.\", one word inside a headline, or the sign-off.",
+      "Do structure content like a letter: greeting, numbered items, fine ink rules at 10 to 15%, a signed closing.",
+      "Do give each service its own pastel sheet and keep text on pastels in ink.",
+      "Do use pink-deep or ink-soft for any small text on cream (AA).",
+      "Do ease motion out with ease-out-expo or ease-out-quart, reveal on scroll with Reveal, and respect prefers-reduced-motion."
+    ],
+    "donts": [
+      "Don't redraw, recolor or reconstruct the logo or the script mark; use the files in `public/brand/`.",
+      "Don't use gradients beyond the barest soft blur, or glass effects as decoration.",
+      "Don't set body copy, buttons or labels in the script face.",
+      "Don't add stock illustrations, invented stats, testimonials, clients or social links.",
+      "Don't float cards with shadows; cards are flat tinted sheets.",
+      "Don't put eyebrow labels or kickers above headings.",
+      "Don't surround the portrait with decorative suns, dots, tags or a script watermark.",
+      "Don't put Nat in a frame, circle or arch in the hero; she stands cut out on the page."
+    ]
+  }
+}

@@ -4,11 +4,12 @@ import { ArrowRight, ChevronDown, CircleAlert, LoaderCircle } from "lucide-react
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { flushSync } from "react-dom";
 import { Button } from "@/components/ui/Button";
-import { services } from "@/data/services";
+import { NOT_SURE_ID, NOT_SURE_TITLE, getServiceTitle, services } from "@/data/services";
 import {
   HONEYPOT_FIELD,
   FILL_MS_FIELD,
   inquirySchema,
+  normalizeInstagram,
   type InquiryField,
   type InquiryResponse,
 } from "@/lib/inquiry-schema";
@@ -36,9 +37,9 @@ function validate(values: Values): Errors {
 
 // Shared control styles: 16px+ text (no iOS zoom), 52px tall, brand focus ring.
 const control =
-  "w-full rounded-xl bg-white text-base text-ink placeholder:text-ink-soft/80 ring-1 ring-inset ring-ink/40 " +
+  "w-full rounded-xl bg-field text-base text-ink placeholder:text-ink-soft/80 ring-1 ring-inset ring-ink/40 " +
   "transition-[box-shadow,background-color] duration-200 ease-(--ease-out-quart) outline-none " +
-  "hover:ring-ink/60 focus-visible:ring-2 focus-visible:ring-pink-deep focus-visible:shadow-[0_0_0_4px_rgb(235_89_136/0.15)] " +
+  "hover:ring-ink/60 focus-visible:ring-2 focus-visible:ring-pink-deep focus-visible:shadow-halo " +
   "aria-invalid:ring-pink-deep/70 aria-invalid:bg-pink/[0.04]";
 
 const label = "mb-2 block text-sm font-medium text-ink";
@@ -53,6 +54,8 @@ export function InquiryForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState<string | null>(null);
   const [announcement, setAnnouncement] = useState("");
+  // Brief highlight on the service field when an "Inquire" button elsewhere preselects it.
+  const [serviceFlash, setServiceFlash] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
@@ -73,7 +76,8 @@ export function InquiryForm() {
   useEffect(() => {
     function onSelect(event: Event) {
       const serviceId = (event as CustomEvent<string>).detail;
-      if (!services.some((s) => s.id === serviceId)) return;
+      const title = getServiceTitle(serviceId);
+      if (!title) return;
       setStatus((s) => {
         if (s !== "success") return s;
         startedAt.current = performance.now();
@@ -81,10 +85,18 @@ export function InquiryForm() {
       });
       setValues((v) => ({ ...v, service: serviceId }));
       setErrors((e) => ({ ...e, service: undefined }));
+      setAnnouncement(`Service selected: ${title}.`);
+      setServiceFlash(true);
     }
     window.addEventListener(SELECT_SERVICE_EVENT, onSelect);
     return () => window.removeEventListener(SELECT_SERVICE_EVENT, onSelect);
   }, []);
+
+  useEffect(() => {
+    if (!serviceFlash) return;
+    const t = window.setTimeout(() => setServiceFlash(false), 1800);
+    return () => window.clearTimeout(t);
+  }, [serviceFlash]);
 
   function update(field: InquiryField, value: string) {
     const next = { ...values, [field]: value };
@@ -95,6 +107,16 @@ export function InquiryForm() {
 
   function blur(field: InquiryField) {
     setTouched((t) => ({ ...t, [field]: true }));
+    // Show a pasted profile link as the plain handle it will be sent as.
+    if (field === "instagram" && values.instagram) {
+      const handle = normalizeInstagram(values.instagram);
+      if (handle !== values.instagram) {
+        const next = { ...values, instagram: handle };
+        setValues(next);
+        setErrors((e) => ({ ...e, instagram: validate(next).instagram }));
+        return;
+      }
+    }
     // Don't nag about an untouched empty field the user simply tabbed past.
     if (!values[field] && !errors[field]) return;
     setErrors((e) => ({ ...e, [field]: validate(values)[field] }));
@@ -332,7 +354,7 @@ export function InquiryForm() {
             onBlur={() => blur("service")}
             className={`${control} h-13 cursor-pointer appearance-none truncate pr-12 pl-4 ${
               values.service ? "" : "text-ink-soft"
-            }`}
+            } ${serviceFlash ? "bg-butter/60 ring-2 ring-pink-deep" : ""}`}
           >
             <option value="" disabled>
               Select a service
@@ -342,6 +364,9 @@ export function InquiryForm() {
                 {s.title}
               </option>
             ))}
+            <option value={NOT_SURE_ID} className="text-ink">
+              {NOT_SURE_TITLE}
+            </option>
           </select>
           <ChevronDown
             aria-hidden
@@ -454,10 +479,14 @@ function SuccessPanel({ onReset }: { onReset: () => void }) {
         tabIndex={-1}
         className="mt-6 font-display text-2xl font-medium tracking-tight text-ink outline-none sm:text-3xl"
       >
-        Thank you — your inquiry is on its way to Nat.
+        Thank you, your inquiry is on its way.
       </h3>
       <p className="mt-3 max-w-sm text-base leading-relaxed text-ink-soft">
-        Nat will reply to the email address you shared.
+        I&apos;ll reply to the email address you shared.
+      </p>
+      <p className="mt-5 font-display text-lg font-light text-ink-soft">
+        Talk soon,
+        <span className="mt-1 block font-script text-6xl leading-none font-normal text-pink">Nat.</span>
       </p>
       <Button type="button" variant="ghost" onClick={onReset} className="mt-8">
         Send another inquiry

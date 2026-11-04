@@ -1,4 +1,4 @@
-import { getService } from "@/data/services";
+import { getServiceTitle } from "@/data/services";
 import type { Inquiry } from "@/lib/inquiry-schema";
 
 // Builds the notification email Nat receives for each inquiry.
@@ -29,7 +29,7 @@ function formatCairo(date: Date) {
 }
 
 export function buildInquiryEmail(inquiry: Inquiry, submittedAt: Date) {
-  const serviceTitle = getService(inquiry.service)?.title ?? inquiry.service;
+  const serviceTitle = getServiceTitle(inquiry.service) ?? inquiry.service;
   const message = inquiry.message.trim();
   const handle = inquiry.instagram;
   const instagramUrl = `https://instagram.com/${encodeURIComponent(handle)}`;

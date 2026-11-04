@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { services } from "@/data/services";
+import { NOT_SURE_ID, services } from "@/data/services";
 import { inquirySchema } from "./inquiry-schema";
 
 const valid = {
@@ -37,6 +37,15 @@ describe("inquirySchema", () => {
   });
 
   it.each([
+    "instagram.com/test.client",
+    "https://www.instagram.com/test.client/",
+    "https://instagram.com/test.client?igsh=abc123",
+    "http://m.instagram.com/@test.client",
+  ])("extracts the username from a pasted profile link: %s", (pasted) => {
+    expect(inquirySchema.parse({ ...valid, instagram: pasted }).instagram).toBe("test.client");
+  });
+
+  it.each([
     ["fullName", "", "Please enter your full name."],
     ["fullName", "A", "Please enter your full name."],
     ["instagram", "", "Please enter your Instagram username."],
@@ -60,5 +69,9 @@ describe("inquirySchema", () => {
     for (const s of services) {
       expect(inquirySchema.safeParse({ ...valid, service: s.id }).success).toBe(true);
     }
+  });
+
+  it('accepts "not sure yet" as a service choice', () => {
+    expect(inquirySchema.safeParse({ ...valid, service: NOT_SURE_ID }).success).toBe(true);
   });
 });

@@ -1,9 +1,19 @@
 import { z } from "zod";
-import { serviceIds } from "@/data/services";
+import { serviceChoiceIds } from "@/data/services";
 
 // Shared by the client form (instant feedback) and the API route (authoritative).
 
 const instagramPattern = /^[A-Za-z0-9._]{1,30}$/;
+
+/**
+ * Accepts what people actually paste: "@handle", "instagram.com/handle",
+ * "https://www.instagram.com/handle/?igsh=…" all become "handle".
+ */
+export function normalizeInstagram(value: string): string {
+  const v = value.trim();
+  const fromUrl = v.match(/^(?:https?:\/\/)?(?:www\.|m\.)?(?:instagram\.com|instagr\.am)\/@?([^/?#\s]+)/i);
+  return (fromUrl ? fromUrl[1] : v).replace(/^@+/, "");
+}
 
 export const inquirySchema = z.object({
   fullName: z
@@ -14,7 +24,7 @@ export const inquirySchema = z.object({
   instagram: z
     .string()
     .trim()
-    .transform((v) => v.replace(/^@+/, ""))
+    .transform(normalizeInstagram)
     .pipe(
       z
         .string()
@@ -27,7 +37,7 @@ export const inquirySchema = z.object({
     .min(1, "Please enter your email address.")
     .max(254, "That email is too long.")
     .pipe(z.email("Please enter a valid email address.")),
-  service: z.enum(serviceIds, { error: "Please choose a service." }),
+  service: z.enum(serviceChoiceIds, { error: "Please choose a service." }),
   message: z.string().trim().max(3000, "Please keep it under 3000 characters.").optional().default(""),
 });
 
