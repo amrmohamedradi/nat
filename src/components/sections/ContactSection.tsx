@@ -1,7 +1,10 @@
 import { ArrowUpRight } from "lucide-react";
 import { InquiryForm } from "@/components/inquiry/InquiryForm";
 import { Reveal } from "@/components/ui/Reveal";
+import { SignatureWrite } from "@/components/ui/SignatureWrite";
+import { WordsRise } from "@/components/ui/WordsRise";
 import { site } from "@/data/site";
+import { INQUIRY_ANCHOR } from "@/lib/select-service";
 
 // Inquiry section: editorial copy on the left, form card on the right (stacked on mobile).
 export function ContactSection() {
@@ -9,22 +12,22 @@ export function ContactSection() {
     <section id="contact" aria-labelledby="contact-title" className="px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
       <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         <Reveal className="lg:sticky lg:top-28 lg:self-start lg:pt-6">
-          <p className="flex items-center gap-3 text-[0.7rem] font-medium tracking-[0.22em] text-ink-soft uppercase sm:text-xs">
-            <span aria-hidden="true" className="h-px w-8 bg-pink" />
-            Contact
-          </p>
           <h2
             id="contact-title"
-            className="mt-6 font-display text-4xl leading-[1.05] font-medium tracking-tight text-balance text-ink sm:text-5xl lg:text-6xl"
+            className="font-display text-4xl leading-[1.05] font-medium tracking-tight text-balance text-ink sm:text-5xl lg:text-6xl"
           >
-            Let&apos;s work together{" "}
-            <span className="mt-1 block font-script text-6xl leading-none font-normal text-pink sm:text-7xl lg:text-8xl">
-              Nat.
-            </span>
+            <WordsRise text="Let's work together." />
           </h2>
           <p className="mt-6 max-w-md text-base leading-relaxed text-ink-soft sm:text-lg">
-            Tell me about your brand and what you&apos;d like to build — I&apos;ll reply to the email you
-            leave below.
+            Tell me about your brand and what you&apos;d like to build. I&apos;ll reply to the email you
+            leave here.
+          </p>
+          {/* The letter's sign-off: the one script moment in this section. */}
+          <p className="mt-8 font-display text-xl font-light text-ink-soft">
+            Speak soon,
+            <SignatureWrite className="mt-1 block font-script text-7xl leading-none font-normal text-pink lg:text-8xl">
+              Nat.
+            </SignatureWrite>
           </p>
           <a
             href={site.instagram.url}
@@ -42,7 +45,10 @@ export function ContactSection() {
         </Reveal>
 
         <Reveal delay={120}>
-          <div className="rounded-3xl bg-white/80 p-5 shadow-[0_30px_60px_-40px_rgb(6_52_68/0.35)] ring-1 ring-ink/10 sm:p-8 lg:p-10">
+          <div
+            id={INQUIRY_ANCHOR}
+            className="rounded-3xl bg-field/80 p-5 shadow-panel ring-1 ring-ink/10 sm:p-8 lg:p-10"
+          >
             <InquiryForm />
           </div>
         </Reveal>

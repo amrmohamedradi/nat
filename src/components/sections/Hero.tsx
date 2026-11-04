@@ -1,105 +1,208 @@
-import { ArrowDown, ArrowUpRight } from "lucide-react";
-import type { CSSProperties } from "react";
+"use client";
+
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { useRef } from "react";
 import { LinkButton } from "@/components/ui/Button";
-import { Reveal } from "@/components/ui/Reveal";
 import { site } from "@/data/site";
 
-// The official script mark used as a mask, so it can take any brand tint.
-const markMask: CSSProperties = {
-  maskImage: "url(/brand/nat-mark.svg)",
-  WebkitMaskImage: "url(/brand/nat-mark.svg)",
-  maskRepeat: "no-repeat",
-  WebkitMaskRepeat: "no-repeat",
-  maskSize: "contain",
-  WebkitMaskSize: "contain",
-};
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+/**
+ * "Hello, this is Nat.": one sentence that Nat's face interrupts. She stands in the middle,
+ * cut out of her portrait; "Hello, / this is" sits behind her on the left (one line above
+ * her head on mobile) and the pink "Nat." finishes the sentence in front of her hair.
+ * Depth is three layers (greeting, portrait, signature).
+ *
+ * Every layer nests three wrappers so motions never fight over one transform:
+ *   [data-depth]  pointer parallax / 3D tilt   (fine pointers only)
+ *   [data-scroll] scroll-scrubbed drift
+ *   [data-intro]  the one-time entrance
+ * Sizes and positions derive from --ph (the portrait's rendered height), set in globals.css.
+ */
 export function Hero() {
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const q = gsap.utils.selector(root);
+      const mm = gsap.matchMedia();
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+        tl.fromTo(
+          q("[data-intro='photo']"),
+          { autoAlpha: 0, y: 90, scale: 0.92, filter: "blur(12px)" },
+          { autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 1.5 },
+        )
+          .fromTo(
+            q("[data-intro='word']"),
+            { autoAlpha: 0, y: 70, rotate: -5 },
+            { autoAlpha: 1, y: 0, rotate: 0, duration: 1.2, stagger: 0.14 },
+            0.3,
+          )
+          // The signature writes itself in: a feathered stroke sweeping left to right,
+          // easing in from a soft blur so nothing appears before the pen does.
+          .fromTo(
+            q("[data-intro='signature']"),
+            { "--ink": "0%", filter: "blur(6px)" },
+            { "--ink": "118%", filter: "blur(0px)", duration: 1.8, ease: "power2.inOut" },
+            0.8,
+          )
+          // Opacity arrives quickly alongside, so the stroke (not a fade) carries the reveal.
+          .fromTo(
+            q("[data-intro='signature']"),
+            { autoAlpha: 0 },
+            { autoAlpha: 1, duration: 0.5, ease: "power1.out" },
+            0.8,
+          )
+          .fromTo(
+            q("[data-intro='copy']"),
+            { autoAlpha: 0, y: 24 },
+            { autoAlpha: 1, y: 0, duration: 1, stagger: 0.08 },
+            1.2,
+          );
+
+        // Scrolling away: the sentence parts around her, the portrait sinks.
+        const scrub = { trigger: root.current, start: "top top", end: "bottom top", scrub: 0.6 };
+        gsap.to(q("[data-scroll='greeting']"), { xPercent: -14, yPercent: -40, ease: "none", scrollTrigger: scrub });
+        gsap.to(q("[data-scroll='photo']"), { yPercent: 10, scale: 0.96, ease: "none", scrollTrigger: scrub });
+        gsap.to(q("[data-scroll='signature']"), { xPercent: 12, yPercent: -60, ease: "none", scrollTrigger: scrub });
+      });
+
+      // Pointer parallax with a gentle 3D turn of the portrait. Desktop mice and trackpads only.
+      mm.add("(prefers-reduced-motion: no-preference) and (pointer: fine)", () => {
+        const section = root.current;
+        if (!section) return;
+        const layers = q("[data-depth]").map((el) => {
+          const depth = Number((el as HTMLElement).dataset.depth);
+          const tilt = el.hasAttribute("data-tilt");
+          return {
+            depth,
+            x: gsap.quickTo(el, "x", { duration: 1, ease: "power3.out" }),
+            y: gsap.quickTo(el, "y", { duration: 1, ease: "power3.out" }),
+            ry: tilt ? gsap.quickTo(el, "rotationY", { duration: 1.2, ease: "power3.out" }) : null,
+            rx: tilt ? gsap.quickTo(el, "rotationX", { duration: 1.2, ease: "power3.out" }) : null,
+          };
+        });
+        const move = (e: PointerEvent) => {
+          const r = section.getBoundingClientRect();
+          const nx = (e.clientX - r.left) / r.width - 0.5;
+          const ny = (e.clientY - r.top) / r.height - 0.5;
+          for (const l of layers) {
+            l.x(nx * l.depth);
+            l.y(ny * l.depth * 0.6);
+            l.ry?.(nx * 8);
+            l.rx?.(-ny * 5);
+          }
+        };
+        const leave = () => {
+          for (const l of layers) {
+            l.x(0);
+            l.y(0);
+            l.ry?.(0);
+            l.rx?.(0);
+          }
+        };
+        section.addEventListener("pointermove", move);
+        section.addEventListener("pointerleave", leave);
+        return () => {
+          section.removeEventListener("pointermove", move);
+          section.removeEventListener("pointerleave", leave);
+        };
+      });
+    },
+    { scope: root },
+  );
+
   return (
-    <section
-      id="home"
-      aria-labelledby="hero-title"
-      className="relative isolate flex min-h-svh flex-col overflow-hidden pt-28 sm:pt-36"
-    >
-      {/* Decorative composition: butter sun, small pastel accents, oversized "Nat" bleeding off the edge */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <Reveal
-          delay={150}
-          className="absolute top-[18%] -right-[28%] aspect-square w-[78vw] rounded-full bg-butter/70 sm:top-[12%] md:-right-[6%] md:w-[44vw] md:max-w-[40rem]"
-        >
-          {null}
-        </Reveal>
-        <Reveal
-          delay={450}
-          className="absolute top-[30%] right-[8%] size-5 rounded-full bg-sky sm:size-7 md:top-[22%] md:right-[44%]"
-        >
-          {null}
-        </Reveal>
-        <Reveal
-          delay={300}
-          className="absolute -right-[38%] -bottom-[2%] aspect-[1224/530] w-[150vw] sm:-right-[22%] md:-right-[8%] md:-bottom-[6%] md:w-[72vw] md:max-w-[76rem]"
-        >
-          <div className="size-full bg-pink/15" style={markMask} />
-        </Reveal>
-      </div>
+    <section ref={root} id="home" aria-labelledby="hero-title" className="hero relative isolate overflow-hidden">
+      <h1 id="hero-title" className="sr-only">
+        Hello, this is Nat.
+      </h1>
 
-      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 pb-16 sm:px-8">
-        <Reveal>
-          <p className="flex items-center gap-3 text-[0.7rem] font-medium tracking-[0.22em] text-ink-soft uppercase sm:text-xs">
-            <span aria-hidden="true" className="h-px w-8 bg-pink" />
-            {site.tagline}
+      <div className="hero-stage relative mx-auto w-full max-w-7xl [perspective:1400px]">
+        {/* Back layer: the start of the sentence, behind Nat */}
+        <div aria-hidden="true" data-depth="-24" className="hero-greeting absolute z-0">
+          <p data-scroll="greeting" className="font-script leading-[0.95] whitespace-nowrap text-ink">
+            <span data-intro="word" className="hero-anim inline-block lg:block">
+              Hello,
+            </span>{" "}
+            <span data-intro="word" className="hero-anim inline-block lg:block lg:pr-[0.12em]">
+              this is
+            </span>
           </p>
-        </Reveal>
+        </div>
 
-        <Reveal delay={120}>
-          <h1
-            id="hero-title"
-            className="mt-6 pl-1 font-script text-[clamp(4.75rem,21vw,13rem)] leading-[0.95] font-normal text-ink sm:mt-8"
-          >
-            Hello, this{" "}
-            <span className="block pl-[0.6em] text-pink sm:pl-[1.4em]">Nat.</span>
-          </h1>
-        </Reveal>
+        {/* Middle layer: Nat herself */}
+        <div
+          data-depth="14"
+          data-tilt
+          className="hero-photo absolute bottom-0 left-1/2 z-10 -translate-x-1/2 [transform-style:preserve-3d]"
+        >
+          <div data-scroll="photo" className="h-full origin-bottom">
+            <div data-intro="photo" className="hero-anim h-full">
+              <Image
+                src={site.heroPhoto.src}
+                alt={site.heroPhoto.alt}
+                width={913}
+                height={1223}
+                preload
+                sizes="(min-width: 1024px) 42rem, 100vw"
+                className="h-full w-auto max-w-none select-none"
+                draggable={false}
+              />
+            </div>
+          </div>
+        </div>
 
-        <div className="mt-10 grid gap-8 sm:mt-12 md:grid-cols-[minmax(0,26rem)_auto] md:items-end md:gap-16">
-          <Reveal delay={260}>
-            <p className="relative max-w-md text-lg leading-relaxed text-ink-soft sm:text-xl">
-            <span aria-hidden="true" className="absolute -top-6 left-0 hidden h-3 w-12 rounded-full bg-lilac md:block" />
+        {/* Front layer: the signature */}
+        <div aria-hidden="true" data-depth="36" className="hero-signature pointer-events-none absolute z-20">
+          <div data-scroll="signature">
+            <span data-intro="signature" className="hero-anim block font-script leading-none text-pink">
+              <span className="ink-reveal">Nat.</span>
+            </span>
+          </div>
+        </div>
+
+        {/* Copy: beside her on desktop (bottom left), under her on phones and tablets */}
+        <div className="hero-copy relative z-30 mx-auto max-w-xl px-4 sm:px-8 lg:absolute lg:bottom-[6%] lg:left-0 lg:mx-0 lg:w-[min(24rem,30%)] lg:max-w-none lg:pr-0">
+          <p data-intro="copy" className="hero-anim text-lg leading-relaxed text-ink-soft sm:text-xl">
             {site.heroSubtitle}
           </p>
-          </Reveal>
-          <Reveal delay={380} className="flex flex-wrap items-center gap-3">
+          <div data-intro="copy" className="hero-anim mt-7 flex flex-wrap items-center gap-3">
             <LinkButton href="#contact">
-              Let&apos;s Work Together
+              Work With Me
               <ArrowUpRight
                 aria-hidden="true"
                 className="size-4 transition-transform duration-300 ease-(--ease-out-quart) group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
             </LinkButton>
-            <LinkButton href="#services" variant="ghost" className="bg-cream/60 backdrop-blur-sm">
+            <LinkButton href="#services" variant="ghost" className="bg-cream">
               Explore services
             </LinkButton>
-          </Reveal>
+          </div>
         </div>
-      </div>
 
-      <Reveal delay={600} className="mx-auto w-full max-w-7xl px-4 pb-6 sm:px-8">
-        <div className="flex items-center justify-between border-t border-ink/10 pt-4 text-xs tracking-[0.18em] text-ink-soft uppercase">
-          <a href="#services" className="inline-flex h-11 items-center gap-2 hover:text-ink">
-            <ArrowDown aria-hidden="true" className="size-3.5 motion-safe:animate-bounce" />
-            Scroll
-          </a>
+        <div
+          data-intro="copy"
+          className="hero-anim absolute right-8 bottom-[6%] z-30 hidden max-w-[14rem] text-right lg:block"
+        >
+          <p className="font-display text-xl leading-snug font-light text-ink-soft">{site.tagline}</p>
           <a
             href={site.instagram.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-11 items-center normal-case tracking-normal hover:text-ink"
+            className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm text-ink-soft underline decoration-ink/20 underline-offset-4 transition-colors hover:text-pink-deep hover:decoration-pink-deep"
           >
             {site.instagram.handle}
             <span className="sr-only"> (Instagram, opens in a new tab)</span>
           </a>
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }

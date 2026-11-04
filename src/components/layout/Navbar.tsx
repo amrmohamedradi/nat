@@ -1,11 +1,16 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { LinkButton } from "@/components/ui/Button";
 import { site } from "@/data/site";
 import { InstagramIcon } from "./InstagramIcon";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const SECTION_IDS = site.nav.map((item) => item.href.slice(1));
 
@@ -16,6 +21,16 @@ export function Navbar() {
   const [active, setActive] = useState<string>(SECTION_IDS[0]);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLSpanElement>(null);
+
+  // Reading progress: a pink line under the bar fills as the page scrolls (a direct mapping, not decoration).
+  useGSAP(() => {
+    gsap.fromTo(
+      progressRef.current,
+      { scaleX: 0 },
+      { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.3 } },
+    );
+  });
 
   // Scrolled state.
   useEffect(() => {
@@ -139,7 +154,7 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <LinkButton href="#contact" className="max-md:hidden">
+          <LinkButton href="#contact" className="max-md:h-11 max-md:px-4 max-md:text-sm">
             Work With Me
           </LinkButton>
 
@@ -168,6 +183,12 @@ export function Navbar() {
           </button>
         </div>
       </nav>
+
+      <span
+        ref={progressRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-pink"
+      />
 
       {/* Mobile sheet */}
       <div

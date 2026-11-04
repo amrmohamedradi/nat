@@ -16,6 +16,12 @@
   --color-lime: #d9e6ad;
   --color-sky: #96d4e8;
   --color-lilac: #cac6e3;
+  --color-field: #fffefc; /* near-white writing surface for form fields and the form panel */
+
+  /* Ink-tinted shadows: only for objects that sit on the page (see DESIGN.md, The Desk Rule). */
+  --shadow-panel: 0 30px 60px -40px rgb(6 52 68 / 0.35);
+  --shadow-ink: 0 1px 0 rgb(255 255 255 / 0.15) inset, 0 10px 24px -12px rgb(6 52 68 / 0.6);
+  --shadow-halo: 0 0 0 4px rgb(235 89 136 / 0.15);
 
   --font-script: var(--font-script);
   --font-display: var(--font-display);
@@ -39,6 +45,24 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Tailwind v4 resets buttons to the default cursor; every clickable control gets the hand. */
+  button:not(:disabled),
+  [role="button"],
+  select,
+  summary {
+    cursor: pointer;
+  }
+
+  /* No double-tap-zoom delay on taps. */
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  label {
+    touch-action: manipulation;
+  }
+
   ::selection {
     background: var(--color-pink);
     color: var(--color-cream);
@@ -49,6 +73,20 @@
     outline-offset: 3px;
     border-radius: 6px;
   }
+}
+
+/*
+ * Ink reveal for script words (the "Nat." signature, "together"): a soft-edged mask that
+ * sweeps left to right like a pen stroke. Animate --ink on the element or a parent
+ * (0% = hidden, 118% = fully shown). The padding/negative margin gives swashes that hang
+ * outside the letter box room inside the mask, so no stray tip shows before the stroke.
+ */
+.ink-reveal {
+  display: inline-block;
+  padding: 0.22em 0.2em;
+  margin: -0.22em -0.2em;
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--ink, 118%) - 18%), transparent var(--ink, 118%));
+  mask-image: linear-gradient(90deg, #000 calc(var(--ink, 118%) - 18%), transparent var(--ink, 118%));
 }
 
 /* Entrance animation: elements with .reveal fade/rise in once on load or when
@@ -65,6 +103,94 @@
   .reveal[data-shown="true"] {
     opacity: 1;
     transform: none;
+  }
+}
+
+/*
+ * Hero stage (components/sections/Hero.tsx). Everything is sized from --ph, the cut-out
+ * portrait's rendered height, so words, portrait and signature scale together.
+ * Phones and tablets stack from the top (--head is the room above Nat's head); lg+ anchors to the bottom.
+ */
+.hero {
+  --head: 10rem;
+  --ph: min(54svh, 114vw);
+}
+.hero-photo {
+  top: var(--head);
+  height: var(--ph);
+}
+/* Mobile: "Hello, this is" on one line above her head, fully readable. */
+.hero-greeting {
+  top: calc(var(--head) - 4.4rem);
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: min(16vw, 5rem);
+}
+.hero-signature {
+  top: calc(var(--head) + var(--ph) * 0.58);
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: calc(var(--ph) * 0.3);
+}
+.hero-copy {
+  padding-top: calc(var(--head) + var(--ph) + 1.5rem);
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    --ph: min(84svh, 54rem, 62vw);
+  }
+  .hero-stage {
+    height: max(40rem, min(100svh, 62rem));
+  }
+  .hero-photo {
+    top: auto;
+    bottom: 0;
+  }
+  /* Desktop: the sentence runs across her face. "Hello, / this is" on the left, tucked
+     into her hair; "Nat." on the right in front of it, on the "this is" line. */
+  .hero-greeting {
+    top: auto;
+    left: auto;
+    right: calc(50% + var(--ph) * 0.25);
+    bottom: calc(var(--ph) * 0.56);
+    text-align: right;
+    font-size: calc(var(--ph) * 0.16);
+  }
+  .hero-signature {
+    top: auto;
+    right: auto;
+    left: calc(50% + var(--ph) * 0.15);
+    bottom: calc(var(--ph) * 0.53);
+    text-align: left;
+    font-size: calc(var(--ph) * 0.28);
+  }
+  .hero-copy {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+/* Until GSAP runs its entrance, hero layers stay hidden (only with scripting and motion allowed).
+   The failsafe lands every layer on its finished state if the script never arrives or
+   stalls; those are the values the entrance ends on anyway, so it never fights GSAP. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .hero-anim {
+    visibility: hidden;
+    animation: nat-failsafe 0s linear 3.4s forwards;
+  }
+}
+@keyframes nat-failsafe {
+  to {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    filter: none;
+    clip-path: none;
+    --ink: 118%;
   }
 }
 

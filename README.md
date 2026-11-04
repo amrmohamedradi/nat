@@ -60,7 +60,7 @@ time + UTC). HTML and plain-text versions; all client input is HTML-escaped.
 | Headline, tagline, hero subtitle, Instagram, nav | `src/data/site.ts` |
 | Colors / motion tokens | `src/app/globals.css` (`@theme`) |
 | Fonts | `src/app/fonts.ts` (files in `src/fonts/`) |
-| Design rules | `docs/DESIGN.md` |
+| Design rules | `DESIGN.md` |
 
 ## Project structure
 
@@ -84,4 +84,4 @@ public/brand/     official logos + nat-mark.svg (pink "Nat" lettering taken from
 - **Font licensing:** *Birds of Paradise* is marked **"PERSONAL USE ONLY"** in the supplied file.
   Buy a commercial license before launch, or replace the script font.
 - Real email delivery is untested until Resend credentials are added.
-- English only. The Arabic brand fonts are in the brand folder but aren't used yet.
+- English only. Site fonts in `src/fonts/` are woff2 files subset to Latin (originals in `../Brand Identity/NAT - FONTS`); an Arabic version needs them re-exported with Arabic glyphs.

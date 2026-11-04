@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { services } from "@/data/services";
+import { NOT_SURE_TITLE, services } from "@/data/services";
 import { selectService } from "@/lib/select-service";
 import { InquiryForm } from "./InquiryForm";
 
@@ -41,7 +41,7 @@ describe("InquiryForm", () => {
     expect(screen.getByLabelText(/email address/i)).toHaveAttribute("type", "email");
     expect(screen.getByLabelText(/project details/i)).toBeInTheDocument();
     const options = screen.getAllByRole("option").map((o) => o.textContent);
-    expect(options).toEqual(["Select a service", ...services.map((s) => s.title)]);
+    expect(options).toEqual(["Select a service", ...services.map((s) => s.title), NOT_SURE_TITLE]);
   });
 
   it("shows an error for every missing required field and focuses the first one", async () => {

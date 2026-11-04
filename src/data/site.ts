@@ -3,12 +3,16 @@
 
 export const site = {
   name: "Nat.",
-  heroHeadline: "Hello, this Nat.",
+  heroHeadline: "Hello, this is Nat.",
   tagline: "Your vision with a touch of Nat",
   // Draft intro — based on the account's stated focus (marketing & branding
   // for personal brands). Nat should confirm or rewrite this line.
   heroSubtitle:
     "Marketing, branding and strategy for personal brands and businesses ready to be seen.",
+  heroPhoto: {
+    src: "/brand/nat-cutout.webp", // cut out of the original portrait (Brand Identity/Photos/Hero.png)
+    alt: "Nat smiling with arms crossed, wearing a white shirt",
+  },
   // `||` (not `??`) so an empty env value also falls back.
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   instagram: {

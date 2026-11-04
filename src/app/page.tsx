@@ -7,8 +7,14 @@ import { Services } from "@/components/sections/Services";
 export default function Page() {
   return (
     <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-medium focus:text-cream"
+      >
+        Skip to content
+      </a>
       <Navbar />
-      <main>
+      <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
         <Services />
         <ContactSection />

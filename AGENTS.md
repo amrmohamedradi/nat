@@ -45,12 +45,12 @@ npm test
 
 ## Specs
 
-Stored in `docs/specs/`. Format: `docs/specs/NNNN-title.md`. Design brief: `docs/DESIGN.md`.
+Stored in `docs/specs/`. Format: `docs/specs/NNNN-title.md`. Design system: `DESIGN.md` (sidecar `.impeccable/design.json`). Product context: `PRODUCT.md`.
 
 ## Rules
 
 - All copy and services live in `src/data/` (`site.ts`, `services.ts`); components only read from there. `services.ts` also feeds the form dropdown, so keep each `id` unique and stable.
-- Follow `docs/DESIGN.md`: brand colors and fonts only, never redraw the logo (`public/brand/`), never invent stats, testimonials, clients or social links.
+- Follow `DESIGN.md`: brand colors and fonts only, never redraw the logo (`public/brand/`), never invent stats, testimonials, clients or social links.
 - Under `cacheComponents`, no `new Date()` or other non deterministic values in server components; no `export const runtime` in route handlers (it breaks the build).
 - `buttonClasses()` has no tailwind-merge: to hide a button responsively use `max-md:hidden`, not `hidden md:inline-flex`.
 - Small text on cream needs AA contrast: use `text-ink-soft` / `text-pink-deep`, keep plain `pink` for large type and accents.

@@ -65,7 +65,7 @@ export function Footer() {
                   <li key={item.href}>
                     <a
                       href={item.href}
-                      className="inline-flex h-11 items-center font-display text-lg text-cream/85 transition-colors hover:text-pink"
+                      className="inline-flex h-11 items-center font-display text-lg text-cream/85 transition-colors hover:text-butter"
                     >
                       {item.label}
                     </a>
@@ -79,7 +79,7 @@ export function Footer() {
                 href={site.instagram.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex min-h-11 items-center gap-2 text-cream/85 transition-colors hover:text-pink"
+                className="mt-4 inline-flex min-h-11 items-center gap-2 text-cream/85 transition-colors hover:text-butter"
               >
                 <InstagramIcon aria-hidden="true" className="size-4 shrink-0" />
                 <span className="break-words">{site.instagram.handle}</span>
