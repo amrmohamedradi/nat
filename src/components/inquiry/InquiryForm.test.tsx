@@ -17,7 +17,7 @@ async function fillValidForm(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText(/full name/i), "Test Client");
   await user.type(screen.getByLabelText(/instagram username/i), "@test.client");
   await user.type(screen.getByLabelText(/email address/i), "test@example.com");
-  await user.selectOptions(screen.getByLabelText(/service interested in/i), services[2].id);
+  await user.click(screen.getByRole("radio", { name: services[2].title }));
   await user.type(screen.getByLabelText(/project details/i), "A new brand");
 }
 
@@ -33,15 +33,16 @@ describe("InquiryForm", () => {
     vi.restoreAllMocks();
   });
 
-  it("labels every field and lists all configured services in the dropdown", () => {
+  it("labels every field and offers every configured service as a choice", () => {
     render(<InquiryForm />);
 
     expect(screen.getByLabelText(/full name/i)).toHaveAttribute("aria-required", "true");
     expect(screen.getByLabelText(/instagram username/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email address/i)).toHaveAttribute("type", "email");
     expect(screen.getByLabelText(/project details/i)).toBeInTheDocument();
-    const options = screen.getAllByRole("option").map((o) => o.textContent);
-    expect(options).toEqual(["Select a service", ...services.map((s) => s.title), NOT_SURE_TITLE]);
+    expect(screen.getByRole("group", { name: /service interested in/i })).toBeInTheDocument();
+    const choices = screen.getAllByRole("radio").map((r) => r.closest("label")?.textContent?.trim());
+    expect(choices).toEqual([...services.map((s) => s.title), NOT_SURE_TITLE]);
   });
 
   it("shows an error for every missing required field and focuses the first one", async () => {
@@ -181,7 +182,7 @@ describe("InquiryForm", () => {
 
     act(() => selectService(services[3].id));
 
-    await waitFor(() => expect(screen.getByLabelText(/service interested in/i)).toHaveValue(services[3].id));
+    await waitFor(() => expect(screen.getByRole("radio", { name: services[3].title })).toBeChecked());
   });
 
   it("ignores an Inquire event for a service that doesn't exist", () => {
@@ -189,6 +190,6 @@ describe("InquiryForm", () => {
 
     act(() => selectService("not-a-service"));
 
-    expect(screen.getByLabelText(/service interested in/i)).toHaveValue("");
+    for (const radio of screen.getAllByRole("radio")) expect(radio).not.toBeChecked();
   });
 });

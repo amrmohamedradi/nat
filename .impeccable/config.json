@@ -14,7 +14,7 @@
       },
       {
         "rule": "design-system-font-size",
-        "value": "clamp(16px, calc(16px (100vw - 1680px) * 0.0115), 26px)",
+        "value": "26px",
         "files": [
           "src/app/globals.css"
         ],

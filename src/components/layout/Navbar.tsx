@@ -14,9 +14,14 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const SECTION_IDS = site.nav.map((item) => item.href.slice(1));
 
-/** Fixed top bar: transparent over the hero, translucent cream once scrolled. Mobile opens a full-width sheet. */
+/**
+ * Fixed top bar: transparent over the hero, translucent cream once scrolled. It slides away
+ * while you read downward and returns the moment you scroll up (never near the top, while the
+ * menu is open, or while keyboard focus is inside it). Mobile opens a full-width sheet.
+ */
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [tucked, setTucked] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>(SECTION_IDS[0]);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -32,9 +37,17 @@ export function Navbar() {
     );
   });
 
-  // Scrolled state.
+  // Scrolled state, plus scroll direction for tucking the bar away while reading down.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 12);
+      if (y < 160) setTucked(false);
+      else if (y > lastY + 8) setTucked(true);
+      else if (y < lastY - 8) setTucked(false);
+      if (Math.abs(y - lastY) > 8) lastY = y;
+    };
     const frame = requestAnimationFrame(onScroll);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
@@ -103,14 +116,15 @@ export function Navbar() {
   }
 
   const solid = scrolled || open;
+  const hidden = tucked && !open;
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ease-(--ease-out-quart) ${
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter,translate] duration-500 ease-(--ease-out-quart) ${
         solid
           ? "border-b border-ink/10 bg-cream/85 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
-      }`}
+      } ${hidden ? "-translate-y-full focus-within:translate-y-0" : ""}`}
     >
       <nav
         aria-label="Primary"
@@ -136,7 +150,7 @@ export function Navbar() {
                 <a
                   href={item.href}
                   aria-current={isActive ? "location" : undefined}
-                  className={`relative flex h-11 items-center px-4 font-display text-[0.95rem] tracking-wide transition-colors duration-300 ${
+                  className={`group relative flex h-11 items-center px-4 font-display text-[0.95rem] tracking-wide transition-colors duration-300 ${
                     isActive ? "text-ink" : "text-ink-soft hover:text-ink"
                   }`}
                 >
@@ -144,7 +158,7 @@ export function Navbar() {
                   <span
                     aria-hidden="true"
                     className={`absolute bottom-1 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-pink transition-[opacity,transform] duration-500 ease-(--ease-out-expo) ${
-                      isActive ? "scale-100 opacity-100" : "scale-0 opacity-0"
+                      isActive ? "scale-100 opacity-100" : "scale-0 opacity-0 group-hover:scale-75 group-hover:opacity-50"
                     }`}
                   />
                 </a>

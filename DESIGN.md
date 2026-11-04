@@ -245,7 +245,7 @@ Outlined pill with "Inquire" text and an ink circle holding an arrow. On hover t
 The services are an editorial index, not cards: four full-width ruled rows, 01 to 04. From 1024px each row is one line of four columns (numeral, title, description, Inquire); below that they stack, with a small pastel dot beside the numeral. Every row's content is always visible (no hover-only information).
 - **Entrance (`ServiceRows`):** as a row scrolls in, its ink rule draws left to right, then numeral, title, copy and button rise 50ms apart; rows arriving together cascade 120ms apart.
 - **Hover:** the row's pastel sheet (1.75rem radius, inset 8px top and bottom) rises from the bottom behind it (`scale-y`, 700ms ease-out-expo), the numeral slides 8px right and the Inquire arrow turns 45 degrees. Transform only; touch devices never see hover.
-- **Contact panel:** writing paper at 80% with a 10% ink ring, 1.5rem radius, resting-panel shadow.
+- **Contact sheet:** the contact section is its own sheet: deeper paper (`paper`) with a 2.5rem rounded top (3.5rem from `sm`) after the services. The form panel on it is the visitor's reply: cream, 2rem radius, 10% ink ring, resting-panel shadow, opening with a letterhead ("Dear Nat," in Aloevera Light over a hairline rule, "I reply by email" on the right). On scroll the panel rises in and the letterhead and fields follow 50ms apart (`StaggerIn`).
 
 ### Inputs / Fields
 - **Style:** writing-paper field, 0.75rem radius, inset 40% ink ring (60% on hover), 52px tall, 16px text.
@@ -253,9 +253,17 @@ The services are an editorial index, not cards: four full-width ruled rows, 01 t
 - **Error:** pink-deep ring at 70% and a faint pink wash; message in pink-deep with an alert icon below the field.
 - **Labels:** Graphik 500 at 0.875rem in ink; optional hints in ink-soft.
 
+### Service Chips
+The service question is a radio group of pills, never a dropdown: all five choices (the four services and "Not sure yet, help me choose") are visible at once and take one tap. Each pill is a real radio input under a styled label: writing-paper fill, 25% ink ring, a dot in the service's pastel (an empty ring for "Not sure yet"), at least 44px tall. Selected: the pill fills with that service's pastel (deep paper for "Not sure yet"), the ring turns ink and a check appears in the dot. Keyboard focus shows the pink-deep ring and halo. "Inquire" and "Help Me Choose" preselect a pill and briefly halo the group.
+
 ### Navigation
-- **Desktop:** Aloevera Display at 0.95rem; ink-soft, ink on hover and when active; the active link gets a small pink dot beneath it. Footer links hover to butter (pink fails contrast on ink at that size). Header is transparent over the hero and becomes 85% cream with blur and a hairline rule once scrolled.
+- **Desktop:** Aloevera Display at 0.95rem; ink-soft, ink on hover and when active; the active link gets a small pink dot beneath it, and hovering an inactive link previews that dot at half strength. Header is transparent over the hero and becomes 85% cream with blur and a hairline rule once scrolled, with the 2px pink reading-progress line along its bottom. It tucks up out of view while the visitor reads downward and slides back on any scroll up; it never hides within 160px of the top, while the mobile menu is open, or while keyboard focus is inside it.
 - **Mobile:** a compact "Work With Me" pill (44px) stays beside a two-line burger that folds into an ×; a full-height cream sheet listing links at 2.6rem with pink-deep 01 to 03 numerals, the tagline, a full-width primary button and the Instagram handle.
+
+### Footer (the last page)
+Ink, cream text. It opens with the closing line "Your vision with a touch of *Nat.*" in Aloevera Light (up to 6rem); the words rise in and "Nat." writes itself in pink script as the letter's final signature (no script watermark, so it stays the only script moment). Below a cream hairline: the white logo and the cream "Work With Me" pill (hover butter), then "Explore" and "Follow" lists whose labels slide 6px on hover and turn butter (pink fails contrast on ink at that size). The bottom row holds the copyright and a 48px round back-to-top button that fills cream on hover.
+
+On screens at least 1024px wide and 760px tall the footer is a curtain: it is pinned to the bottom of the viewport underneath the page (`.footer-curtain`), and the page sheet (`main`, cream, with the contact sheet's 3.5rem rounded bottom corners) lifts off it as you reach the end. Smaller screens keep a normal footer so nothing is hidden.
 
 ## Do's and Don'ts
 
