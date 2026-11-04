@@ -10,7 +10,8 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 /**
  * Entrance for the services index: as each row scrolls in, its ink rule draws left to
  * right, then the row's number, title, copy and button rise in 50ms apart. Rows that
- * arrive together cascade. With reduced motion everything is simply there.
+ * arrive together cascade. Only opacity is animated (never visibility), so the buttons stay
+ * reachable by keyboard before the reveal fires. With reduced motion everything is simply there.
  */
 export function ServiceRows({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLOListElement>(null);
@@ -22,7 +23,7 @@ export function ServiceRows({ children }: { children: ReactNode }) {
         const rows = gsap.utils.toArray<HTMLElement>("[data-row]", ref.current);
         for (const row of rows) {
           gsap.set(row.querySelector("[data-rule]"), { scaleX: 0 });
-          gsap.set(row.querySelectorAll("[data-rise]"), { autoAlpha: 0, y: 36 });
+          gsap.set(row.querySelectorAll("[data-rise]"), { opacity: 0, y: 36 });
         }
         ScrollTrigger.batch(rows, {
           start: "top 88%",
@@ -32,7 +33,7 @@ export function ServiceRows({ children }: { children: ReactNode }) {
               gsap
                 .timeline({ delay: i * 0.12, defaults: { ease: "expo.out" } })
                 .to(row.querySelector("[data-rule]"), { scaleX: 1, duration: 1.1 })
-                .to(row.querySelectorAll("[data-rise]"), { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.05 }, 0.15);
+                .to(row.querySelectorAll("[data-rise]"), { opacity: 1, y: 0, duration: 0.9, stagger: 0.05 }, 0.15);
             });
           },
         });

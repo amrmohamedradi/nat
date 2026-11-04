@@ -77,10 +77,16 @@
     color: var(--color-cream);
   }
 
+  /* The outline follows each element's own radius; no reshaping on focus. */
   :focus-visible {
     outline: 2px solid var(--color-pink-deep);
     outline-offset: 3px;
-    border-radius: 6px;
+  }
+
+  /* Browser surfaces in brand colors. */
+  html {
+    accent-color: var(--color-pink-deep);
+    scrollbar-color: rgb(6 52 68 / 0.35) var(--color-cream);
   }
 }
 
@@ -196,8 +202,9 @@
  */
 @custom-variant curtain (@media (min-width: 1024px) and (min-height: 760px));
 
+/* Only when the footer actually fits the screen (FooterCurtain sets data-fits), so nothing is clipped. */
 @media (min-width: 1024px) and (min-height: 760px) {
-  .footer-curtain {
+  .footer-curtain[data-fits="true"] {
     position: sticky;
     bottom: 0;
     z-index: 0;
@@ -205,6 +212,20 @@
   .page-sheet {
     border-bottom-left-radius: 3.5rem;
     border-bottom-right-radius: 3.5rem;
+  }
+}
+
+/* Mobile menu sheet: fades down into place; its links follow in sequence. */
+@keyframes nat-sheet-open {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+@keyframes nat-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
   }
 }
 

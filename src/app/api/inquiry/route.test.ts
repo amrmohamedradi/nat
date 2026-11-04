@@ -12,7 +12,7 @@ const validBody = {
   fullName: "Test Client",
   instagram: "@test.client",
   email: "test@example.com",
-  service: "branding-packaging",
+  services: ["branding-packaging"],
   message: "Hi Nat",
   fillMs: 9000,
 };
@@ -70,14 +70,14 @@ describe("POST /api/inquiry", () => {
   it("returns field errors and sends nothing when the data is invalid", async () => {
     const { POST } = await loadRoute();
 
-    const res = await POST(post({ ...validBody, email: "nope", service: "unknown" }));
+    const res = await POST(post({ ...validBody, email: "nope", services: [] }));
     const body = await res.json();
 
     expect(res.status).toBe(400);
     expect(body.ok).toBe(false);
     expect(body.fieldErrors).toMatchObject({
       email: "Please enter a valid email address.",
-      service: "Please choose a service.",
+      services: "Please choose at least one service.",
     });
     expect(send).not.toHaveBeenCalled();
   });

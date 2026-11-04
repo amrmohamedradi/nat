@@ -37,7 +37,13 @@ export const inquirySchema = z.object({
     .min(1, "Please enter your email address.")
     .max(254, "That email is too long.")
     .pipe(z.email("Please enter a valid email address.")),
-  service: z.enum(serviceChoiceIds, { error: "Please choose a service." }),
+  // One or more services; duplicates collapse.
+  services: z
+    .array(z.enum(serviceChoiceIds, { error: "Please choose from the listed services." }), {
+      error: "Please choose at least one service.",
+    })
+    .min(1, "Please choose at least one service.")
+    .transform((ids) => [...new Set(ids)]),
   message: z.string().trim().max(3000, "Please keep it under 3000 characters.").optional().default(""),
 });
 

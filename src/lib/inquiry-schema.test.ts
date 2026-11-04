@@ -6,7 +6,7 @@ const valid = {
   fullName: "Test Client",
   instagram: "test.client",
   email: "test@example.com",
-  service: services[0].id,
+  services: [services[0].id],
   message: "",
 };
 
@@ -53,8 +53,8 @@ describe("inquirySchema", () => {
     ["instagram", "a".repeat(31), "Use letters, numbers, periods or underscores (max 30)."],
     ["email", "", "Please enter your email address."],
     ["email", "not-an-email", "Please enter a valid email address."],
-    ["service", "", "Please choose a service."],
-    ["service", "made-up-service", "Please choose a service."],
+    ["services", [], "Please choose at least one service."],
+    ["services", ["made-up-service"], "Please choose from the listed services."],
   ])("rejects %s = %j with a clear message", (field, value, message) => {
     expect(errorFor({ ...valid, [field]: value }, field)).toBe(message);
   });
@@ -67,11 +67,16 @@ describe("inquirySchema", () => {
 
   it("accepts every configured service id", () => {
     for (const s of services) {
-      expect(inquirySchema.safeParse({ ...valid, service: s.id }).success).toBe(true);
+      expect(inquirySchema.safeParse({ ...valid, services: [s.id] }).success).toBe(true);
     }
   });
 
   it('accepts "not sure yet" as a service choice', () => {
-    expect(inquirySchema.safeParse({ ...valid, service: NOT_SURE_ID }).success).toBe(true);
+    expect(inquirySchema.safeParse({ ...valid, services: [NOT_SURE_ID] }).success).toBe(true);
+  });
+
+  it("accepts several services and collapses duplicates", () => {
+    const picked = [services[0].id, services[2].id, services[0].id];
+    expect(inquirySchema.parse({ ...valid, services: picked }).services).toEqual([services[0].id, services[2].id]);
   });
 });

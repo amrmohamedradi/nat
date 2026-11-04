@@ -2,8 +2,10 @@ import Image from "next/image";
 import { cacheLife } from "next/cache";
 import { ArrowUp, ArrowUpRight } from "lucide-react";
 import { SignatureWrite } from "@/components/ui/SignatureWrite";
-import { WordsRise } from "@/components/ui/WordsRise";
+import { buttonClasses } from "@/components/ui/Button";
 import { site } from "@/data/site";
+import { INQUIRY_ANCHOR } from "@/lib/select-service";
+import { FooterCurtain } from "./FooterCurtain";
 import { InstagramIcon } from "./InstagramIcon";
 
 // Cached so prerendering stays deterministic under cacheComponents; refreshes daily.
@@ -19,11 +21,11 @@ async function CopyrightYear() {
  */
 export function Footer() {
   return (
-    <footer className="footer-curtain relative isolate overflow-hidden bg-ink text-cream [&_:focus-visible]:outline-cream">
+    <FooterCurtain className="footer-curtain relative isolate overflow-hidden bg-ink text-cream [&_:focus-visible]:outline-cream">
       <div className="mx-auto max-w-7xl px-4 pt-20 pb-8 sm:px-8 sm:pt-28">
         {/* Closing line */}
         <p className="max-w-5xl font-display text-[clamp(2.4rem,6.4vw,6rem)] leading-[1.02] font-light tracking-tight text-balance">
-          <WordsRise text="Your vision with a touch of" />{" "}
+          Your vision with a touch of{" "}
           <SignatureWrite className="font-script font-normal text-pink">Nat.</SignatureWrite>
         </p>
 
@@ -39,16 +41,15 @@ export function Footer() {
                 className="h-14 w-auto sm:h-16"
               />
             </a>
-            <a
-              href="#contact"
-              className="group mt-8 flex h-12 w-fit items-center gap-2 rounded-full bg-cream px-6 text-[0.95rem] font-medium text-ink transition-[background-color,transform] duration-300 ease-(--ease-out-quart) hover:bg-butter active:scale-[0.97] sm:h-13 sm:px-7"
-            >
+            <div className="mt-8">
+            <a href={`#${INQUIRY_ANCHOR}`} className={buttonClasses("onInk")}>
               Work With Me
               <ArrowUpRight
                 aria-hidden="true"
                 className="size-4 transition-transform duration-300 ease-(--ease-out-quart) group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
             </a>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-8 min-[420px]:grid-cols-2 md:col-span-6">
@@ -101,6 +102,6 @@ export function Footer() {
           </a>
         </div>
       </div>
-    </footer>
+    </FooterCurtain>
   );
 }

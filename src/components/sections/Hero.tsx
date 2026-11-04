@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import { LinkButton } from "@/components/ui/Button";
 import { site } from "@/data/site";
+import { INQUIRY_ANCHOR } from "@/lib/select-service";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -170,18 +171,18 @@ export function Hero() {
 
         {/* Copy: beside her on desktop (bottom left), under her on phones and tablets */}
         <div className="hero-copy relative z-30 mx-auto max-w-xl px-4 sm:px-8 lg:absolute lg:bottom-[6%] lg:left-0 lg:mx-0 lg:w-[min(24rem,30%)] lg:max-w-none lg:pr-0">
-          <p data-intro="copy" className="hero-anim text-lg leading-relaxed text-ink-soft sm:text-xl">
+          <p data-intro="copy" className="hero-anim text-lg leading-relaxed text-pretty text-ink-soft sm:text-xl">
             {site.heroSubtitle}
           </p>
           <div data-intro="copy" className="hero-anim mt-7 flex flex-wrap items-center gap-3">
-            <LinkButton href="#contact">
+            <LinkButton href={`#${INQUIRY_ANCHOR}`}>
               Work With Me
               <ArrowUpRight
                 aria-hidden="true"
                 className="size-4 transition-transform duration-300 ease-(--ease-out-quart) group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
             </LinkButton>
-            <LinkButton href="#services" variant="ghost" className="bg-cream">
+            <LinkButton href="#services" variant="ghost">
               Explore services
             </LinkButton>
           </div>

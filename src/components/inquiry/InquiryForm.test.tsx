@@ -17,7 +17,7 @@ async function fillValidForm(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText(/full name/i), "Test Client");
   await user.type(screen.getByLabelText(/instagram username/i), "@test.client");
   await user.type(screen.getByLabelText(/email address/i), "test@example.com");
-  await user.click(screen.getByRole("radio", { name: services[2].title }));
+  await user.click(screen.getByRole("checkbox", { name: services[2].title }));
   await user.type(screen.getByLabelText(/project details/i), "A new brand");
 }
 
@@ -40,8 +40,8 @@ describe("InquiryForm", () => {
     expect(screen.getByLabelText(/instagram username/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email address/i)).toHaveAttribute("type", "email");
     expect(screen.getByLabelText(/project details/i)).toBeInTheDocument();
-    expect(screen.getByRole("group", { name: /service interested in/i })).toBeInTheDocument();
-    const choices = screen.getAllByRole("radio").map((r) => r.closest("label")?.textContent?.trim());
+    expect(screen.getByRole("group", { name: /services interested in/i })).toBeInTheDocument();
+    const choices = screen.getAllByRole("checkbox").map((r) => r.closest("label")?.textContent?.trim());
     expect(choices).toEqual([...services.map((s) => s.title), NOT_SURE_TITLE]);
   });
 
@@ -54,7 +54,7 @@ describe("InquiryForm", () => {
     expect(screen.getByText("Please enter your full name.")).toBeInTheDocument();
     expect(screen.getByText("Please enter your Instagram username.")).toBeInTheDocument();
     expect(screen.getByText("Please enter your email address.")).toBeInTheDocument();
-    expect(screen.getByText("Please choose a service.")).toBeInTheDocument();
+    expect(screen.getByText("Please choose at least one service.")).toBeInTheDocument();
     expect(screen.getByLabelText(/full name/i)).toHaveFocus();
     expect(fetchMock).not.toHaveBeenCalled();
   });
@@ -96,7 +96,7 @@ describe("InquiryForm", () => {
       fullName: "Test Client",
       instagram: "test.client",
       email: "test@example.com",
-      service: services[2].id,
+      services: [services[2].id],
       message: "A new brand",
       fillMs: 9000,
     });
@@ -182,7 +182,7 @@ describe("InquiryForm", () => {
 
     act(() => selectService(services[3].id));
 
-    await waitFor(() => expect(screen.getByRole("radio", { name: services[3].title })).toBeChecked());
+    await waitFor(() => expect(screen.getByRole("checkbox", { name: services[3].title })).toBeChecked());
   });
 
   it("ignores an Inquire event for a service that doesn't exist", () => {
@@ -190,6 +190,37 @@ describe("InquiryForm", () => {
 
     act(() => selectService("not-a-service"));
 
-    for (const radio of screen.getAllByRole("radio")) expect(radio).not.toBeChecked();
+    for (const box of screen.getAllByRole("checkbox")) expect(box).not.toBeChecked();
+  });
+
+  it("lets the visitor pick several services, with 'not sure yet' standing alone", async () => {
+    const user = userEvent.setup();
+    render(<InquiryForm />);
+    const box = (name: string) => screen.getByRole("checkbox", { name });
+
+    await user.click(box(services[0].title));
+    await user.click(box(services[2].title));
+    expect(box(services[0].title)).toBeChecked();
+    expect(box(services[2].title)).toBeChecked();
+
+    await user.click(box(NOT_SURE_TITLE));
+    expect(box(NOT_SURE_TITLE)).toBeChecked();
+    expect(box(services[0].title)).not.toBeChecked();
+    expect(box(services[2].title)).not.toBeChecked();
+
+    await user.click(box(services[1].title));
+    expect(box(services[1].title)).toBeChecked();
+    expect(box(NOT_SURE_TITLE)).not.toBeChecked();
+  });
+
+  it("adds an Inquire choice to services already picked", async () => {
+    const user = userEvent.setup();
+    render(<InquiryForm />);
+
+    await user.click(screen.getByRole("checkbox", { name: services[0].title }));
+    act(() => selectService(services[3].id));
+
+    await waitFor(() => expect(screen.getByRole("checkbox", { name: services[3].title })).toBeChecked());
+    expect(screen.getByRole("checkbox", { name: services[0].title })).toBeChecked();
   });
 });

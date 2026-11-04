@@ -29,7 +29,7 @@ function formatCairo(date: Date) {
 }
 
 export function buildInquiryEmail(inquiry: Inquiry, submittedAt: Date) {
-  const serviceTitle = getServiceTitle(inquiry.service) ?? inquiry.service;
+  const serviceTitles = inquiry.services.map((id) => getServiceTitle(id) ?? id);
   const message = inquiry.message.trim();
   const handle = inquiry.instagram;
   const instagramUrl = `https://instagram.com/${encodeURIComponent(handle)}`;
@@ -46,7 +46,10 @@ export function buildInquiryEmail(inquiry: Inquiry, submittedAt: Date) {
       label: "Email",
       html: `<a href="mailto:${escapeHtml(inquiry.email)}" style="color:${pinkDeep};text-decoration:none;font-weight:600;">${escapeHtml(inquiry.email)}</a>`,
     },
-    { label: "Service", html: escapeHtml(serviceTitle) },
+    {
+      label: serviceTitles.length > 1 ? "Services" : "Service",
+      html: serviceTitles.map(escapeHtml).join("<br>"),
+    },
     {
       label: "Submitted",
       html: `${escapeHtml(cairo)}<br><span style="color:${inkSoft};font-size:13px;">${escapeHtml(iso)} UTC</span>`,
@@ -116,7 +119,7 @@ export function buildInquiryEmail(inquiry: Inquiry, submittedAt: Date) {
     `Full name: ${inquiry.fullName}`,
     `Instagram: @${handle} (${instagramUrl})`,
     `Email: ${inquiry.email}`,
-    `Service: ${serviceTitle}`,
+    `${serviceTitles.length > 1 ? "Services" : "Service"}: ${serviceTitles.join(", ")}`,
     `Submitted: ${cairo}`,
     `           ${iso} UTC`,
     "",

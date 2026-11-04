@@ -8,6 +8,7 @@ import { ArrowUpRight } from "lucide-react";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { LinkButton } from "@/components/ui/Button";
 import { site } from "@/data/site";
+import { INQUIRY_ANCHOR } from "@/lib/select-service";
 import { InstagramIcon } from "./InstagramIcon";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -168,7 +169,10 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <LinkButton href="#contact" className="max-md:h-11 max-md:px-4 max-md:text-sm">
+          <LinkButton
+            href={`#${INQUIRY_ANCHOR}`}
+            className={`max-md:h-11 max-md:px-4 max-md:text-sm ${open ? "max-md:hidden" : ""}`}
+          >
             Work With Me
           </LinkButton>
 
@@ -209,7 +213,7 @@ export function Navbar() {
         id="mobile-menu"
         ref={sheetRef}
         hidden={!open}
-        className="h-[calc(100svh-4.5rem)] overflow-y-auto border-t border-ink/10 bg-cream md:hidden"
+        className="h-[calc(100svh-4.5rem)] overflow-y-auto border-t border-ink/10 bg-cream motion-safe:animate-[nat-sheet-open_0.5s_var(--ease-out-expo)_both] md:hidden"
       >
         <div className="flex min-h-full flex-col px-4 pt-8 pb-10">
           <ul className="flex flex-col">
@@ -227,7 +231,7 @@ export function Navbar() {
                     onClick={(e) => goTo(e, item.href)}
                     className="group flex items-baseline gap-4 py-5"
                   >
-                    <span aria-hidden="true" className="w-6 font-display text-xs tracking-widest text-pink-deep">
+                    <span aria-hidden="true" className="w-10 font-display text-2xl leading-none font-light tracking-tighter text-pink-deep">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="font-display text-[2.6rem] leading-none font-medium tracking-tight text-ink">
@@ -243,8 +247,15 @@ export function Navbar() {
           </ul>
 
           <div className="mt-auto flex flex-col gap-6 pt-12">
-            <p className="font-display text-2xl leading-snug font-light text-ink-soft">{site.tagline}</p>
-            <LinkButton href="#contact" onClick={(e) => goTo(e, "#contact")} className="w-full">
+            <p className="font-display text-2xl leading-snug font-light text-ink-soft">
+              {site.tagline.replace(/\s*Nat\.?$/, "")}{" "}
+              <span className="font-script text-4xl leading-none font-normal text-pink">Nat.</span>
+            </p>
+            <LinkButton
+              href={`#${INQUIRY_ANCHOR}`}
+              onClick={(e) => goTo(e, `#${INQUIRY_ANCHOR}`)}
+              className="w-full"
+            >
               Work With Me
               <ArrowUpRight aria-hidden="true" className="size-4" />
             </LinkButton>
@@ -252,7 +263,7 @@ export function Navbar() {
               href={site.instagram.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-11 items-center gap-2 self-start text-sm text-ink-soft hover:text-ink"
+              className="inline-flex h-11 items-center gap-2 self-start text-sm text-ink-soft underline decoration-ink/20 underline-offset-4 hover:text-pink-deep hover:decoration-pink-deep"
             >
               <InstagramIcon aria-hidden="true" className="size-4" />
               {site.instagram.handle}
@@ -262,7 +273,6 @@ export function Navbar() {
         </div>
       </div>
 
-      <style>{`@keyframes nat-sheet-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}`}</style>
     </header>
   );
 }
