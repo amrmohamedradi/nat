@@ -14,7 +14,7 @@ export default function Page() {
         Skip to content
       </a>
       <Navbar />
-      <main id="main" tabIndex={-1} className="outline-none">
+      <main id="main" tabIndex={-1} className="page-sheet relative z-10 bg-cream outline-none">
         <Hero />
         <Services />
         <ContactSection />

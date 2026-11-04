@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowRight, ChevronDown, CircleAlert, LoaderCircle } from "lucide-react";
+import { ArrowRight, Check, CircleAlert, LoaderCircle } from "lucide-react";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { flushSync } from "react-dom";
 import { Button } from "@/components/ui/Button";
-import { NOT_SURE_ID, NOT_SURE_TITLE, getServiceTitle, services } from "@/data/services";
+import { NOT_SURE_ID, NOT_SURE_TITLE, getServiceTitle, services, type ServiceAccent } from "@/data/services";
 import {
   HONEYPOT_FIELD,
   FILL_MS_FIELD,
@@ -43,6 +43,27 @@ const control =
   "aria-invalid:ring-pink-deep/70 aria-invalid:bg-pink/[0.04]";
 
 const label = "mb-2 block text-sm font-medium text-ink";
+
+// Selected service chips take that service's pastel (static class names so Tailwind sees them).
+const accentChecked: Record<ServiceAccent, string> = {
+  butter: "has-checked:bg-butter",
+  lime: "has-checked:bg-lime",
+  sky: "has-checked:bg-sky",
+  lilac: "has-checked:bg-lilac",
+};
+const accentDot: Record<ServiceAccent, string> = {
+  butter: "bg-butter",
+  lime: "bg-lime",
+  sky: "bg-sky",
+  lilac: "bg-lilac",
+};
+
+// One service choice as a pill: a real radio input (keyboard arrows, screen readers) under a styled label.
+const chip =
+  "group/chip relative inline-flex min-h-11 cursor-pointer items-center gap-2.5 rounded-full bg-field py-2 pr-4 pl-3 " +
+  "text-left text-[0.95rem] leading-snug text-ink ring-1 ring-inset ring-ink/25 " +
+  "transition-[background-color,box-shadow,transform] duration-300 ease-(--ease-out-quart) " +
+  "hover:ring-ink/60 active:scale-[0.97] has-checked:ring-ink has-focus-visible:ring-2 has-focus-visible:ring-pink-deep has-focus-visible:shadow-halo";
 
 export function InquiryForm() {
   const uid = useId();
@@ -123,7 +144,11 @@ export function InquiryForm() {
   }
 
   function focusField(field: InquiryField) {
-    formRef.current?.querySelector<HTMLElement>(`[name="${field}"]`)?.focus();
+    const form = formRef.current;
+    const target =
+      form?.querySelector<HTMLElement>(`[name="${field}"]:checked`) ??
+      form?.querySelector<HTMLElement>(`[name="${field}"]`);
+    target?.focus();
   }
 
   function showErrors(next: Errors) {
@@ -259,7 +284,7 @@ export function InquiryForm() {
         />
       </div>
 
-      <div>
+      <div data-field>
         <label htmlFor={id("fullName")} className={label}>
           Full name <Req />
         </label>
@@ -279,7 +304,7 @@ export function InquiryForm() {
         {errorText("fullName")}
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div data-field className="grid gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor={id("instagram")} className={label}>
             Instagram username <Req />
@@ -338,45 +363,47 @@ export function InquiryForm() {
         </div>
       </div>
 
-      <div>
-        <label htmlFor={id("service")} className={label}>
+      {/* Every choice visible at once: one tap on a phone, no dropdown to open. */}
+      <fieldset data-field aria-describedby={described("service")}>
+        <legend id={id("service-legend")} className={label}>
           Service interested in <Req />
-        </label>
-        <div className="relative">
-          <select
-            id={id("service")}
-            name="service"
-            aria-required
-            aria-invalid={!!errors.service}
-            aria-describedby={described("service")}
-            value={values.service}
-            onChange={(e) => update("service", e.target.value)}
-            onBlur={() => blur("service")}
-            className={`${control} h-13 cursor-pointer appearance-none truncate pr-12 pl-4 ${
-              values.service ? "" : "text-ink-soft"
-            } ${serviceFlash ? "bg-butter/60 ring-2 ring-pink-deep" : ""}`}
-          >
-            <option value="" disabled>
-              Select a service
-            </option>
-            {services.map((s) => (
-              <option key={s.id} value={s.id} className="text-ink">
-                {s.title}
-              </option>
-            ))}
-            <option value={NOT_SURE_ID} className="text-ink">
-              {NOT_SURE_TITLE}
-            </option>
-          </select>
-          <ChevronDown
-            aria-hidden
-            className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 text-ink"
-          />
+        </legend>
+        <div
+          role="radiogroup"
+          aria-labelledby={id("service-legend")}
+          aria-required
+          aria-invalid={!!errors.service}
+          className={`flex flex-wrap gap-2.5 rounded-2xl transition-[box-shadow] duration-500 ${
+            serviceFlash ? "shadow-halo" : ""
+          }`}
+        >
+          {[...services.map((s) => ({ id: s.id, title: s.title, dot: accentDot[s.accent], on: accentChecked[s.accent] })),
+            { id: NOT_SURE_ID, title: NOT_SURE_TITLE, dot: "bg-transparent ring-1 ring-inset ring-ink/40", on: "has-checked:bg-paper" },
+          ].map((choice) => (
+            <label key={choice.id} className={`${chip} ${choice.on}`}>
+              <input
+                type="radio"
+                name="service"
+                value={choice.id}
+                checked={values.service === choice.id}
+                onChange={() => update("service", choice.id)}
+                onBlur={() => blur("service")}
+                className="peer sr-only"
+              />
+              <span
+                aria-hidden
+                className={`grid size-5 shrink-0 place-items-center rounded-full ${choice.dot} transition-transform duration-300 ease-(--ease-out-expo) group-has-checked/chip:scale-110`}
+              >
+                <Check className="size-3 scale-0 text-ink transition-transform duration-300 ease-(--ease-out-expo) peer-checked:scale-100 group-has-checked/chip:scale-100" strokeWidth={3} />
+              </span>
+              {choice.title}
+            </label>
+          ))}
         </div>
         {errorText("service")}
-      </div>
+      </fieldset>
 
-      <div>
+      <div data-field>
         <div className="mb-2 flex items-baseline justify-between gap-4">
           <label htmlFor={id("message")} className="block text-sm font-medium text-ink">
             Project details <span className="font-normal text-ink-soft">(optional)</span>
@@ -406,7 +433,7 @@ export function InquiryForm() {
         {errorText("message")}
       </div>
 
-      <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
+      <div data-field className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs text-ink-soft">
           <span aria-hidden className="text-pink-deep">*</span> Required fields
         </p>

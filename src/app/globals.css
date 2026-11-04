@@ -189,6 +189,25 @@
   }
 }
 
+/*
+ * Footer curtain (large, tall-enough screens): the page is a sheet that lifts off the ink
+ * footer, which waits underneath, pinned to the bottom of the viewport. Below that size the
+ * footer simply follows the page, so a short screen never hides any of it.
+ */
+@custom-variant curtain (@media (min-width: 1024px) and (min-height: 760px));
+
+@media (min-width: 1024px) and (min-height: 760px) {
+  .footer-curtain {
+    position: sticky;
+    bottom: 0;
+    z-index: 0;
+  }
+  .page-sheet {
+    border-bottom-left-radius: 3.5rem;
+    border-bottom-right-radius: 3.5rem;
+  }
+}
+
 /* Until GSAP runs its entrance, hero layers stay hidden (only with scripting and motion allowed).
    The failsafe lands every layer on its finished state if the script never arrives or
    stalls; those are the values the entrance ends on anyway, so it never fights GSAP. */
