@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-04T14:25:15.886Z",
+  "generatedAt": "2026-11-04T14:47:13.485Z",
   "title": "Design System: Nat.",
   "extensions": {
     "colorMeta": {
@@ -272,9 +272,9 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Ink pill for the main action (Work With Me, Send). Turns pink-deep on hover.",
+      "description": "Brand pink pill for the main action (Work With Me, Send). Turns ink on hover.",
       "html": "<a class=\"ds-btn-primary\" href=\"#\">Let's Work Together <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></a>",
-      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 24px;border-radius:9999px;font-family:var(--font-sans);font-weight:500;font-size:0.95rem;letter-spacing:-0.025em;border:none;cursor:pointer;transition:background-color .3s var(--ease-out-quart),color .3s var(--ease-out-quart),box-shadow .3s var(--ease-out-quart),transform .3s var(--ease-out-quart);background:var(--color-ink);color:var(--color-cream);text-decoration:none;box-shadow:var(--shadow-ink);}.ds-btn-primary svg{transition:transform .3s var(--ease-out-quart);}.ds-btn-primary:hover{background:var(--color-pink-deep);}.ds-btn-primary:hover svg{transform:translate(2px,-2px);}.ds-btn-primary:active{transform:scale(.97);}.ds-btn-primary:focus-visible{outline:2px solid var(--color-pink-deep);outline-offset:3px;}"
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 24px;border-radius:9999px;font-family:var(--font-sans);font-weight:500;font-size:0.95rem;letter-spacing:-0.025em;border:none;cursor:pointer;transition:background-color .3s var(--ease-out-quart),color .3s var(--ease-out-quart),box-shadow .3s var(--ease-out-quart),transform .3s var(--ease-out-quart);background:var(--color-pink-deep);color:var(--color-cream);text-decoration:none;box-shadow:var(--shadow-pink);}.ds-btn-primary svg{transition:transform .3s var(--ease-out-quart);}.ds-btn-primary:hover{background:var(--color-ink);box-shadow:var(--shadow-ink);}.ds-btn-primary:hover svg{transform:translate(2px,-2px);}.ds-btn-primary:active{transform:scale(.97);}.ds-btn-primary:focus-visible{outline:2px solid var(--color-pink-deep);outline-offset:3px;}"
     },
     {
       "name": "Ghost Button",
@@ -293,12 +293,12 @@
       "css": ".ds-inquire{display:inline-flex;align-items:center;gap:12px;height:48px;padding:4px 4px 4px 20px;border-radius:9999px;font-family:var(--font-sans);font-weight:500;font-size:.95rem;color:var(--color-ink);text-decoration:none;box-shadow:inset 0 0 0 1px rgb(6 52 68/.15);transition:background-color .3s var(--ease-out-quart),color .3s var(--ease-out-quart);}.ds-inquire-dot{display:grid;place-items:center;width:40px;height:40px;border-radius:9999px;background:var(--color-ink);color:var(--color-cream);transition:background-color .5s var(--ease-out-expo),color .5s var(--ease-out-expo),transform .5s var(--ease-out-expo);}.ds-inquire:hover{background:var(--color-ink);color:var(--color-cream);}.ds-inquire:hover .ds-inquire-dot{background:var(--color-pink);color:var(--color-ink);transform:rotate(45deg);}.ds-inquire:active{transform:scale(.97);}.ds-inquire:focus-visible{outline:2px solid var(--color-pink-deep);outline-offset:3px;}"
     },
     {
-      "name": "Service Card",
-      "kind": "card",
-      "refersTo": "service-card",
-      "description": "Flat pastel sheet per service: huge light numeral, title, description, inquire pill. Lifts on hover.",
-      "html": "<article class=\"ds-service\"><div class=\"ds-service-top\"><span class=\"ds-service-num\">01</span><span class=\"ds-service-dot\"></span></div><h3>Consultations &amp; Strategy Building</h3><p>We pinpoint your challenges, uncover the opportunities, and build a clear plan to move forward.</p></article>",
-      "css": ".ds-service{max-width:420px;padding:40px;border-radius:2.25rem;background:var(--color-butter);color:var(--color-ink);transition:transform .5s var(--ease-out-expo);}.ds-service:hover{transform:translateY(-6px);}.ds-service-top{display:flex;justify-content:space-between;align-items:flex-start;}.ds-service-num{font-family:var(--font-display);font-weight:300;font-size:5rem;line-height:1;letter-spacing:-.05em;}.ds-service-dot{margin-top:8px;width:10px;height:10px;border-radius:9999px;background:var(--color-pink);opacity:0;transition:opacity .3s;}.ds-service:hover .ds-service-dot{opacity:1;}.ds-service h3{margin:56px 0 0;font-family:var(--font-display);font-weight:600;font-size:1.9rem;line-height:1.25;letter-spacing:-.025em;}.ds-service p{margin:16px 0 0;font-family:var(--font-sans);line-height:1.625;color:rgb(6 52 68/.8);}"
+      "name": "Service Row",
+      "kind": "custom",
+      "refersTo": "service-row-hover",
+      "description": "Editorial index row: numeral, title, description, Inquire. Pastel sheet rises behind it on hover.",
+      "html": "<article class=\"ds-row\"><span class=\"ds-row-sheet\"></span><span class=\"ds-row-num\">01</span><h3>Consultations &amp; Strategy Building</h3><p>We pinpoint your challenges, uncover the opportunities, and build a clear plan to move forward.</p></article>",
+      "css": ".ds-row{position:relative;isolation:isolate;display:grid;grid-template-columns:5rem 1fr 1fr;gap:24px;align-items:center;padding:36px 24px;border-top:1px solid rgb(6 52 68/.15);color:var(--color-ink);font-family:var(--font-sans);max-width:900px;}.ds-row-sheet{position:absolute;inset:8px 0;z-index:-1;border-radius:1.75rem;background:var(--color-butter);transform:scaleY(0);transform-origin:bottom;transition:transform .7s var(--ease-out-expo);}.ds-row:hover .ds-row-sheet{transform:scaleY(1);}.ds-row-num{font-family:var(--font-display);font-weight:300;font-size:3.5rem;line-height:1;letter-spacing:-.05em;transition:transform .7s var(--ease-out-expo);}.ds-row:hover .ds-row-num{transform:translateX(8px);}.ds-row h3{margin:0;font-family:var(--font-display);font-weight:600;font-size:1.6rem;line-height:1.25;letter-spacing:-.025em;}.ds-row p{margin:0;line-height:1.625;color:var(--color-ink-soft);}"
     },
     {
       "name": "Text Input",
@@ -379,7 +379,7 @@
       "Don't use gradients beyond the barest soft blur, or glass effects as decoration.",
       "Don't set body copy, buttons or labels in the script face.",
       "Don't add stock illustrations, invented stats, testimonials, clients or social links.",
-      "Don't float cards with shadows; cards are flat tinted sheets.",
+      "Don't float cards with shadows; tinted sheets are flat.",
       "Don't put eyebrow labels or kickers above headings.",
       "Don't surround the portrait with decorative suns, dots, tags or a script watermark.",
       "Don't put Nat in a frame, circle or arch in the hero; she stands cut out on the page."

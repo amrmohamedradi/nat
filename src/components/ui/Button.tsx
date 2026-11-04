@@ -11,10 +11,8 @@ const base =
 const sizes = "h-12 px-6 text-[0.95rem] sm:h-13 sm:px-7";
 
 const variants: Record<Variant, string> = {
-  // Ink pill → deep pink on hover (cream text stays AA on both).
-  primary:
-    "bg-ink text-cream shadow-ink " +
-    "hover:bg-pink-deep",
+  // Brand pink pill (pink-deep keeps cream text AA at 5:1) → ink on hover.
+  primary: "bg-pink-deep text-cream shadow-pink hover:bg-ink hover:shadow-ink",
   ghost: "text-ink ring-1 ring-ink/20 hover:ring-ink hover:bg-ink/[0.03]",
 };
 

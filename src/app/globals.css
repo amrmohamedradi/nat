@@ -21,6 +21,7 @@
   /* Ink-tinted shadows: only for objects that sit on the page (see DESIGN.md, The Desk Rule). */
   --shadow-panel: 0 30px 60px -40px rgb(6 52 68 / 0.35);
   --shadow-ink: 0 1px 0 rgb(255 255 255 / 0.15) inset, 0 10px 24px -12px rgb(6 52 68 / 0.6);
+  --shadow-pink: 0 1px 0 rgb(255 255 255 / 0.2) inset, 0 12px 26px -12px rgb(193 58 104 / 0.65);
   --shadow-halo: 0 0 0 4px rgb(235 89 136 / 0.15);
 
   --font-script: var(--font-script);
@@ -32,6 +33,14 @@
 }
 
 @layer base {
+  /* Big screens: the whole rem-based system (type, spacing, containers, hero) scales up
+     smoothly past 1680px instead of sitting small in the middle of a large monitor. */
+  @media (min-width: 1680px) {
+    html {
+      font-size: clamp(16px, calc(16px + (100vw - 1680px) * 0.0115), 26px);
+    }
+  }
+
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
@@ -118,6 +127,12 @@
 .hero-photo {
   top: var(--head);
   height: var(--ph);
+}
+/* The portrait is cut at the waist: fade that edge into the page so the hero melts into
+   the next section instead of ending on a hard line. */
+.hero-cutout {
+  -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
 }
 /* Mobile: "Hello, this is" on one line above her head, fully readable. */
 .hero-greeting {
