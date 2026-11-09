@@ -33,6 +33,20 @@ describe("InquiryForm", () => {
     vi.restoreAllMocks();
   });
 
+  it("submits without an Instagram account", async () => {
+    const user = userEvent.setup();
+    fetchMock.mockResolvedValue(jsonResponse({ ok: true }));
+    render(<InquiryForm />);
+    await user.type(screen.getByLabelText(/full name/i), "Test Client");
+    await user.type(screen.getByLabelText(/email address/i), "test@example.com");
+    await user.click(screen.getByRole("checkbox", { name: services[0].title }));
+    now = 5000;
+    await user.click(screen.getByRole("button", { name: /send inquiry/i }));
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledOnce());
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body).instagram).toBe("");
+    await waitFor(() => expect(screen.getByRole("button", { name: /send another/i })).toBeInTheDocument());
+  });
+
   it("labels every field and offers every configured service as a choice", () => {
     render(<InquiryForm />);
 
@@ -52,7 +66,7 @@ describe("InquiryForm", () => {
     await user.click(screen.getByRole("button", { name: /send inquiry/i }));
 
     expect(screen.getByText("Please enter your full name.")).toBeInTheDocument();
-    expect(screen.getByText("Please enter your Instagram username.")).toBeInTheDocument();
+    expect(screen.getByLabelText(/instagram username/i)).toHaveAttribute("aria-invalid", "false");
     expect(screen.getByText("Please enter your email address.")).toBeInTheDocument();
     expect(screen.getByText("Please choose at least one service.")).toBeInTheDocument();
     expect(screen.getByLabelText(/full name/i)).toHaveFocus();

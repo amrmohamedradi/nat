@@ -17,6 +17,10 @@ function errorFor(input: Record<string, unknown>, field: string) {
 }
 
 describe("inquirySchema", () => {
+  it.each(["", "   ", undefined])("accepts an omitted or blank Instagram handle: %s", (instagram) => {
+    expect(inquirySchema.parse({ ...valid, instagram }).instagram).toBe("");
+  });
+
   it("accepts a complete inquiry", () => {
     expect(inquirySchema.safeParse(valid).success).toBe(true);
   });
@@ -48,7 +52,6 @@ describe("inquirySchema", () => {
   it.each([
     ["fullName", "", "Please enter your full name."],
     ["fullName", "A", "Please enter your full name."],
-    ["instagram", "", "Please enter your Instagram username."],
     ["instagram", "has space", "Use letters, numbers, periods or underscores (max 30)."],
     ["instagram", "a".repeat(31), "Use letters, numbers, periods or underscores (max 30)."],
     ["email", "", "Please enter your email address."],

@@ -22,6 +22,7 @@ export const site = {
   nav: [
     { label: "Home", href: "#home" },
     { label: "Services", href: "#services" },
+    { label: "Work", href: "#work" },
     { label: "Contact", href: "#contact" },
   ],
 } as const;

@@ -345,7 +345,7 @@ export function InquiryForm() {
       <div data-field className="grid gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor={id("instagram")} className={label}>
-            Instagram username <Req />
+            Instagram username <span className="font-normal text-ink-soft">(optional)</span>
           </label>
           <div className="relative">
             <span
@@ -364,7 +364,6 @@ export function InquiryForm() {
               autoCorrect="off"
               spellCheck={false}
               placeholder="yourhandle"
-              aria-required
               aria-invalid={!!errors.instagram}
               aria-describedby={described("instagram")}
               value={values.instagram}

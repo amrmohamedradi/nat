@@ -12,6 +12,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 Personal marketing site for Nat (@marketinggwithnat): one page (hero, services, inquiry form) plus an email API route.
 
+The homepage also includes illustrative work and proposed collaboration steps from `src/data/work.ts`. Keep these clearly labelled as preview examples until Nat supplies approved material. Instagram is optional in the inquiry form and email.
+
+About copy, service detail expansions, FAQs, inquiry expectations and approved testimonials live in `src/data/experience.ts`. The testimonials section stays hidden while its data array is empty. Expandable content uses native `details` and `summary` through `Disclosure`.
+
 ## Stack
 
 - **Language / Runtime**: TypeScript, Node 20+ (developed on Node 24)

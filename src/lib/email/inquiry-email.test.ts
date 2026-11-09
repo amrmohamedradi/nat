@@ -11,6 +11,13 @@ const inquiry = {
 const submittedAt = new Date("2026-11-04T12:30:00Z");
 
 describe("buildInquiryEmail", () => {
+  it("handles an inquiry without an Instagram account", () => {
+    const { html, text } = buildInquiryEmail({ ...inquiry, instagram: "" }, submittedAt);
+    expect(text).toContain("Instagram: Not provided");
+    expect(html).toContain("Not provided");
+    expect(html).not.toContain('href="https://instagram.com/"');
+  });
+
   it("includes every required field in the plain text version", () => {
     const { text } = buildInquiryEmail(inquiry, submittedAt);
 

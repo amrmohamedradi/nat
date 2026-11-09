@@ -3,6 +3,10 @@ import { Navbar } from "@/components/layout/Navbar";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { Hero } from "@/components/sections/Hero";
 import { Services } from "@/components/sections/Services";
+import { WorkPreview } from "@/components/sections/WorkPreview";
+import { About } from "@/components/sections/About";
+import { Faq } from "@/components/sections/Faq";
+import { Testimonials } from "@/components/sections/Testimonials";
 
 export default function Page() {
   return (
@@ -16,7 +20,11 @@ export default function Page() {
       <Navbar />
       <main id="main" tabIndex={-1} className="page-sheet relative z-10 bg-cream outline-none">
         <Hero />
+        <About />
         <Services />
+        <WorkPreview />
+        <Testimonials />
+        <Faq />
         <ContactSection />
       </main>
       <Footer />

@@ -28,9 +28,10 @@ export const inquirySchema = z.object({
     .pipe(
       z
         .string()
-        .min(1, "Please enter your Instagram username.")
-        .regex(instagramPattern, "Use letters, numbers, periods or underscores (max 30)."),
-    ),
+        .refine((value) => value === "" || instagramPattern.test(value), "Use letters, numbers, periods or underscores (max 30)."),
+    )
+    .optional()
+    .default(""),
   email: z
     .string()
     .trim()

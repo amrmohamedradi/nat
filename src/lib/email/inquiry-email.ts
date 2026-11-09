@@ -40,7 +40,7 @@ export function buildInquiryEmail(inquiry: Inquiry, submittedAt: Date) {
     { label: "Full name", html: escapeHtml(inquiry.fullName) },
     {
       label: "Instagram",
-      html: `<a href="${escapeHtml(instagramUrl)}" style="color:${pinkDeep};text-decoration:none;font-weight:600;">@${escapeHtml(handle)}</a>`,
+      html: handle ? `<a href="${escapeHtml(instagramUrl)}" style="color:${pinkDeep};text-decoration:none;font-weight:600;">@${escapeHtml(handle)}</a>` : "Not provided",
     },
     {
       label: "Email",
@@ -117,7 +117,7 @@ export function buildInquiryEmail(inquiry: Inquiry, submittedAt: Date) {
     "New Client Inquiry — Nat.",
     "",
     `Full name: ${inquiry.fullName}`,
-    `Instagram: @${handle} (${instagramUrl})`,
+    handle ? `Instagram: @${handle} (${instagramUrl})` : "Instagram: Not provided",
     `Email: ${inquiry.email}`,
     `${serviceTitles.length > 1 ? "Services" : "Service"}: ${serviceTitles.join(", ")}`,
     `Submitted: ${cairo}`,

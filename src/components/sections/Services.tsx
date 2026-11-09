@@ -3,6 +3,8 @@ import { SignatureWrite } from "@/components/ui/SignatureWrite";
 import { NOT_SURE_ID, services, type ServiceAccent } from "@/data/services";
 import { InquireLink, SelectServiceButton } from "./InquireLink";
 import { ServiceRows } from "./ServiceRows";
+import { serviceDetails } from "@/data/experience";
+import { Disclosure } from "@/components/ui/Disclosure";
 
 // Static class names so Tailwind can see them.
 const accentSurface: Record<ServiceAccent, string> = {
@@ -33,7 +35,7 @@ export function Services() {
           <div className="md:col-span-4 md:pb-3">
             <p className="max-w-sm text-base leading-relaxed text-ink-soft md:ml-auto">
               Pick a starting point below. Each one opens a conversation, and every plan is shaped
-              around you.
+              around you. Service descriptions are draft copy for this preview, pending Nat&apos;s confirmation.
             </p>
           </div>
         </div>
@@ -70,9 +72,19 @@ export function Services() {
                   {service.title}
                 </h3>
 
-                <p data-rise className="max-w-md text-base leading-relaxed text-ink-soft">
-                  {service.description}
-                </p>
+                <div data-rise className="max-w-md text-base leading-relaxed text-ink-soft">
+                  <p>{service.description}</p>
+                  <div className="mt-5">
+                    <Disclosure title="Is this for me?">
+                      <p>{serviceDetails[service.id].fit}</p>
+                      <p className="mt-4 font-medium text-ink">Possible areas of support</p>
+                      <ul className="mt-2 list-disc space-y-2 pl-5">
+                        {serviceDetails[service.id].outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}
+                      </ul>
+                      <p className="mt-4 text-sm">Exact deliverables are agreed around your project.</p>
+                    </Disclosure>
+                  </div>
+                </div>
 
                 <div data-rise className="pt-2 lg:pt-0">
                   <InquireLink serviceId={service.id} serviceTitle={service.title} />

@@ -17,26 +17,26 @@ export const services = [
     id: "consultations-strategy",
     title: "Consultations & Strategy Building",
     description:
-      "We pinpoint your challenges, uncover the opportunities, and build a clear plan to move forward.",
+      "For a brand that needs a clearer direction. We explore your challenges, audience and priorities to shape a practical plan for what comes next.",
     accent: "butter",
   },
   {
     id: "online-presence",
     title: "Build Your Online Presence — for Personal Brands",
     description:
-      "Building your online presence as a personal brand, starting from defining who you are and how you show up.",
+      "For creators, founders and professionals ready to show up with purpose. We explore your positioning, voice and content direction so your online presence feels like you.",
     accent: "lime",
   },
   {
     id: "branding-packaging",
     title: "Branding & Packaging Design",
-    description: "Visual identity, rebranding, and creative packaging design.",
+    description: "For businesses creating a new look or rethinking an existing one. Explore a visual identity and packaging direction that bring your brand story together.",
     accent: "sky",
   },
   {
     id: "brand-experiences-events",
     title: "Brand Experiences & Events",
-    description: "Creative ideas, activations, and events for brands.",
+    description: "For brands looking to connect with people beyond the screen. Explore an activation or event concept built around your audience and the experience you want to create.",
     accent: "lilac",
   },
 ] as const satisfies readonly Service[];

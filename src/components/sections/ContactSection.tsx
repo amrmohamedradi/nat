@@ -5,6 +5,7 @@ import { SignatureWrite } from "@/components/ui/SignatureWrite";
 import { StaggerIn } from "@/components/ui/StaggerIn";
 import { site } from "@/data/site";
 import { INQUIRY_ANCHOR } from "@/lib/select-service";
+import { inquiryNext } from "@/data/experience";
 
 /**
  * The reply. The section is its own sheet (deeper paper, rounded top) after the services;
@@ -30,6 +31,11 @@ export function ContactSection() {
             Tell me about your brand and what you&apos;d like to build. I&apos;ll reply to the email you
             leave here.
           </p>
+          <div className="mt-8 max-w-md border-t border-ink/15 pt-6">
+            <h3 className="font-display text-xl font-medium text-ink">{inquiryNext.heading}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-ink-soft">{inquiryNext.body}</p>
+            <p className="mt-3 text-xs leading-relaxed text-ink-soft">{inquiryNext.note}</p>
+          </div>
           {/* The letter's sign-off: the one script moment in this section. */}
           <p className="mt-8 font-display text-xl font-light text-ink-soft">
             Speak soon,
