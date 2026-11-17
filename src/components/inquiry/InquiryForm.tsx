@@ -14,6 +14,7 @@ import {
   type InquiryResponse,
 } from "@/lib/inquiry-schema";
 import { site } from "@/data/site";
+import { inquiryBusinessType } from "@/data/experience";
 import { SELECT_SERVICE_EVENT } from "@/lib/select-service";
 
 type TextField = Exclude<InquiryField, "services">;
@@ -22,8 +23,8 @@ type Errors = Partial<Record<InquiryField, string>>;
 type Status = "idle" | "submitting" | "success";
 
 const MESSAGE_MAX = 3000;
-const FIELD_ORDER: InquiryField[] = ["fullName", "instagram", "email", "services", "message"];
-const EMPTY: Values = { fullName: "", instagram: "", email: "", services: [], message: "" };
+const FIELD_ORDER: InquiryField[] = ["fullName", "businessType", "instagram", "email", "services", "message"];
+const EMPTY: Values = { fullName: "", businessType: "", instagram: "", email: "", services: [], message: "" };
 
 const isEmpty = (v: string | string[]) => (Array.isArray(v) ? v.length === 0 : !v);
 
@@ -340,6 +341,26 @@ export function InquiryForm() {
           className={`${control} h-13 px-4`}
         />
         {errorText("fullName")}
+      </div>
+
+      <div data-field>
+        <label htmlFor={id("businessType")} className={label}>
+          {inquiryBusinessType.label} <span className="font-normal text-ink-soft">(optional)</span>
+        </label>
+        <input
+          id={id("businessType")}
+          name="businessType"
+          type="text"
+          autoComplete="off"
+          placeholder={inquiryBusinessType.placeholder}
+          aria-invalid={!!errors.businessType}
+          aria-describedby={described("businessType")}
+          value={values.businessType}
+          onChange={(e) => update("businessType", e.target.value)}
+          onBlur={() => blur("businessType")}
+          className={`${control} h-13 px-4`}
+        />
+        {errorText("businessType")}
       </div>
 
       <div data-field className="grid gap-6 sm:grid-cols-2">

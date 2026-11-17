@@ -17,6 +17,21 @@ function errorFor(input: Record<string, unknown>, field: string) {
 }
 
 describe("inquirySchema", () => {
+  it.each(["", "   ", undefined])("accepts an optional business type: %s", (businessType) => {
+    expect(inquirySchema.parse({ ...valid, businessType }).businessType).toBe("");
+  });
+
+  it("trims business type and accepts the length limit", () => {
+    expect(inquirySchema.parse({ ...valid, businessType: "  Online store  " }).businessType).toBe("Online store");
+    expect(inquirySchema.parse({ ...valid, businessType: "x".repeat(120) }).businessType).toHaveLength(120);
+  });
+
+  it("rejects an oversized business type", () => {
+    expect(errorFor({ ...valid, businessType: "x".repeat(121) }, "businessType")).toBe(
+      "Please keep the business type under 120 characters.",
+    );
+  });
+
   it.each(["", "   ", undefined])("accepts an omitted or blank Instagram handle: %s", (instagram) => {
     expect(inquirySchema.parse({ ...valid, instagram }).instagram).toBe("");
   });

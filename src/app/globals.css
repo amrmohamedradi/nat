@@ -128,7 +128,7 @@
  */
 .hero {
   --head: 10rem;
-  --ph: min(54svh, 114vw);
+  --ph: min(46svh, 105vw);
 }
 .hero-photo {
   top: var(--head);
@@ -156,7 +156,7 @@
   font-size: calc(var(--ph) * 0.3);
 }
 .hero-copy {
-  padding-top: calc(var(--head) + var(--ph) + 1.5rem);
+  padding-top: calc(var(--head) + var(--ph) + 0.5rem);
   padding-bottom: 3rem;
 }
 
@@ -179,7 +179,7 @@
     right: calc(50% + var(--ph) * 0.25);
     bottom: calc(var(--ph) * 0.56);
     text-align: right;
-    font-size: calc(var(--ph) * 0.16);
+    font-size: calc(var(--ph) * 0.185);
   }
   .hero-signature {
     top: auto;
@@ -187,7 +187,7 @@
     left: calc(50% + var(--ph) * 0.15);
     bottom: calc(var(--ph) * 0.53);
     text-align: left;
-    font-size: calc(var(--ph) * 0.28);
+    font-size: calc(var(--ph) * 0.32);
   }
   .hero-copy {
     padding-top: 0;
@@ -266,3 +266,14 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Editorial paper changes give the page a distinct rhythm without extra ornaments. */
+.about-sheet { border-radius: 2.5rem 2.5rem 0 0; }
+@media (min-width: 640px) { .about-sheet { border-radius: 3.5rem 3.5rem 0 0; } }
+@media (min-width: 1024px) {
+  #work article:first-child .study-canvas { aspect-ratio: 1 / 1; }
+  #work article:nth-child(2) .study-canvas { aspect-ratio: 4 / 5; }
+}
+/* Native details keep their keyboard behavior; supporting text arrives gently. */
+@keyframes disclosure-arrive { from { opacity: 0; transform: translateY(-5px); } }
+details[open] > div { animation: disclosure-arrive 250ms var(--ease-out-quart); }

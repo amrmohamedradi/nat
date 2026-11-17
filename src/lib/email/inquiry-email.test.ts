@@ -3,6 +3,7 @@ import { buildInquiryEmail } from "./inquiry-email";
 
 const inquiry = {
   fullName: "Test Client",
+  businessType: "Online store",
   instagram: "test.client",
   email: "test@example.com",
   services: ["branding-packaging" as const],
@@ -11,6 +12,18 @@ const inquiry = {
 const submittedAt = new Date("2026-11-04T12:30:00Z");
 
 describe("buildInquiryEmail", () => {
+  it("includes and escapes the business type in the notification", () => {
+    const { html, text } = buildInquiryEmail({ ...inquiry, businessType: '<b>Food & drink</b>' }, submittedAt);
+    expect(text).toContain("Business type / industry: <b>Food & drink</b>");
+    expect(html).toContain("&lt;b&gt;Food &amp; drink&lt;/b&gt;");
+    expect(html).not.toContain("<b>Food");
+  });
+
+  it("handles a business type that was left blank", () => {
+    const { text } = buildInquiryEmail({ ...inquiry, businessType: "" }, submittedAt);
+    expect(text).toContain("Business type / industry: Not provided");
+  });
+
   it("handles an inquiry without an Instagram account", () => {
     const { html, text } = buildInquiryEmail({ ...inquiry, instagram: "" }, submittedAt);
     expect(text).toContain("Instagram: Not provided");

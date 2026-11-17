@@ -111,27 +111,28 @@ export function Navbar() {
     document.body.style.removeProperty("overflow");
     setOpen(false);
     requestAnimationFrame(() => {
-      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+      document.querySelector(href)?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
       history.replaceState(null, "", href);
     });
   }
 
   const solid = scrolled || open;
+  const compact = scrolled && !open;
   const hidden = tucked && !open;
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter,translate] duration-500 ease-(--ease-out-quart) ${
+      className={`fixed inset-x-0 top-0 z-50 ${compact ? "[--nav-height:4rem]" : "[--nav-height:4.5rem] sm:[--nav-height:5rem]"} transition-[background-color,border-color,backdrop-filter,translate] duration-500 ease-(--ease-out-quart) ${
         solid
-          ? "border-b border-ink/10 bg-cream/85 backdrop-blur-md"
+          ? "border-b border-ink/10 bg-cream/95 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       } ${hidden ? "-translate-y-full focus-within:translate-y-0" : ""}`}
     >
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-6 px-4 sm:h-20 sm:px-8"
+        className="mx-auto flex h-(--nav-height) max-w-7xl items-center justify-between gap-3 px-4 transition-[height] duration-300 ease-(--ease-out-quart) sm:px-8 md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]"
       >
-        <a href="#home" className="-ml-1 shrink-0 rounded-md p-1" onClick={() => setOpen(false)}>
+        <a href="#home" className="-ml-1 w-fit shrink-0 rounded-md p-1" onClick={() => setOpen(false)}>
           <Image
             src="/brand/logo.svg"
             alt="Nat. — marketing with Nat"
@@ -143,7 +144,7 @@ export function Navbar() {
           />
         </a>
 
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center gap-1 md:flex md:justify-self-center">
           {site.nav.map((item) => {
             const isActive = active === item.href.slice(1);
             return (
@@ -151,24 +152,19 @@ export function Navbar() {
                 <a
                   href={item.href}
                   aria-current={isActive ? "location" : undefined}
-                  className={`group relative flex h-11 items-center px-4 font-display text-[0.95rem] tracking-wide transition-colors duration-300 ${
-                    isActive ? "text-ink" : "text-ink-soft hover:text-ink"
+                  className={`group relative flex h-11 items-center rounded-full px-3 font-display text-[0.95rem] tracking-wide transition-colors duration-300 lg:px-4 ${
+                    isActive ? "bg-paper text-ink" : "text-ink-soft hover:bg-paper/60 hover:text-ink"
                   }`}
                 >
                   {item.label}
-                  <span
-                    aria-hidden="true"
-                    className={`absolute bottom-1 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-pink transition-[opacity,transform] duration-500 ease-(--ease-out-expo) ${
-                      isActive ? "scale-100 opacity-100" : "scale-0 opacity-0 group-hover:scale-75 group-hover:opacity-50"
-                    }`}
-                  />
+
                 </a>
               </li>
             );
           })}
         </ul>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-end gap-2 md:justify-self-end">
           <LinkButton
             href={`#${INQUIRY_ANCHOR}`}
             className={`max-md:h-11 max-md:px-4 max-md:text-sm ${open ? "max-md:hidden" : ""}`}
@@ -213,7 +209,7 @@ export function Navbar() {
         id="mobile-menu"
         ref={sheetRef}
         hidden={!open}
-        className="h-[calc(100svh-4.5rem)] overflow-y-auto border-t border-ink/10 bg-cream motion-safe:animate-[nat-sheet-open_0.5s_var(--ease-out-expo)_both] md:hidden"
+        className="h-[calc(100dvh_-_var(--nav-height))] overflow-y-auto border-t border-ink/10 bg-cream motion-safe:animate-[nat-sheet-open_0.5s_var(--ease-out-expo)_both] md:hidden"
       >
         <div className="flex min-h-full flex-col px-4 pt-8 pb-10">
           <ul className="flex flex-col">
@@ -229,17 +225,12 @@ export function Navbar() {
                     href={item.href}
                     aria-current={isActive ? "location" : undefined}
                     onClick={(e) => goTo(e, item.href)}
-                    className="group flex items-baseline gap-4 py-5"
+                    className={`group flex min-h-20 items-center justify-between gap-4 py-5 ${isActive ? "text-pink-deep" : "text-ink"}`}
                   >
-                    <span aria-hidden="true" className="w-10 font-display text-2xl leading-none font-light tracking-tighter text-pink-deep">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="font-display text-[2.6rem] leading-none font-medium tracking-tight text-ink">
+                    <span className="font-display text-[clamp(2.6rem,11vw,3.5rem)] leading-none font-light tracking-tight">
                       {item.label}
                     </span>
-                    {isActive && (
-                      <span aria-hidden="true" className="ml-auto size-2 self-center rounded-full bg-pink" />
-                    )}
+                    <ArrowUpRight aria-hidden="true" className="size-6 shrink-0 transition-transform duration-300 ease-(--ease-out-quart) group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </a>
                 </li>
               );

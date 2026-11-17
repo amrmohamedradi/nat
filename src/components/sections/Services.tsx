@@ -52,14 +52,14 @@ export function Services() {
               {/* The pastel sheet that rises behind the row on hover */}
               <span
                 aria-hidden="true"
-                className={`absolute inset-x-0 inset-y-2 -z-10 origin-bottom rounded-[1.75rem] transition-transform duration-700 ease-(--ease-out-expo) lg:scale-y-0 lg:group-hover/card:scale-y-100 ${accentSurface[service.accent]}`}
+                className={`absolute inset-x-0 inset-y-2 -z-10 origin-bottom rounded-[1.75rem] transition-transform duration-700 ease-(--ease-out-expo) lg:scale-y-0 lg:group-hover/card:scale-y-100 lg:group-focus-within/card:scale-y-100 ${accentSurface[service.accent]}`}
               />
 
               <article className="grid gap-x-10 gap-y-4 px-5 py-9 sm:px-6 sm:py-11 lg:grid-cols-[minmax(0,7rem)_minmax(0,1.15fr)_minmax(0,1fr)_auto] lg:items-center lg:py-12">
                 <div data-rise className="flex items-center gap-4">
                   <span
                     aria-hidden="true"
-                    className="font-display text-[clamp(2.6rem,5vw,4.5rem)] leading-none font-light tracking-tighter text-ink transition-transform duration-700 ease-(--ease-out-expo) group-hover/card:translate-x-2"
+                    className={`grid size-20 place-items-center rounded-2xl font-display text-4xl leading-none font-light tracking-tight text-ink transition-transform duration-700 ease-(--ease-out-expo) group-hover/card:translate-x-2 sm:size-24 sm:text-[3.5rem] ${accentSurface[service.accent]}`}
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>

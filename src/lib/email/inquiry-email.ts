@@ -38,6 +38,7 @@ export function buildInquiryEmail(inquiry: Inquiry, submittedAt: Date) {
 
   const rows: { label: string; html: string }[] = [
     { label: "Full name", html: escapeHtml(inquiry.fullName) },
+    { label: "Business type / industry", html: inquiry.businessType ? escapeHtml(inquiry.businessType) : "Not provided" },
     {
       label: "Instagram",
       html: handle ? `<a href="${escapeHtml(instagramUrl)}" style="color:${pinkDeep};text-decoration:none;font-weight:600;">@${escapeHtml(handle)}</a>` : "Not provided",
@@ -117,6 +118,7 @@ export function buildInquiryEmail(inquiry: Inquiry, submittedAt: Date) {
     "New Client Inquiry — Nat.",
     "",
     `Full name: ${inquiry.fullName}`,
+    `Business type / industry: ${inquiry.businessType || "Not provided"}`,
     handle ? `Instagram: @${handle} (${instagramUrl})` : "Instagram: Not provided",
     `Email: ${inquiry.email}`,
     `${serviceTitles.length > 1 ? "Services" : "Service"}: ${serviceTitles.join(", ")}`,

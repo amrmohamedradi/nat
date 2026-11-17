@@ -21,6 +21,7 @@ export const inquirySchema = z.object({
     .trim()
     .min(2, "Please enter your full name.")
     .max(100, "That name is a little long — 100 characters max."),
+  businessType: z.string().trim().max(120, "Please keep the business type under 120 characters.").optional().default(""),
   instagram: z
     .string()
     .trim()

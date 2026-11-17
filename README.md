@@ -41,7 +41,7 @@ If any of the three email variables is missing, the form shows *"Email service i
 yet"* — it never fakes success.
 
 The email: subject **"New Client Inquiry — Nat."**, reply-to set to the client, and it contains full
-name, Instagram (linked), email, the chosen service(s), project details, and the submission time (Cairo
+name, optional business type / industry, Instagram (linked), email, the chosen service(s), project details, and the submission time (Cairo
 time + UTC). HTML and plain-text versions; all client input is HTML-escaped.
 
 ## Spam protection

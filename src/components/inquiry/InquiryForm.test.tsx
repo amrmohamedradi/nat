@@ -44,6 +44,7 @@ describe("InquiryForm", () => {
     await user.click(screen.getByRole("button", { name: /send inquiry/i }));
     await waitFor(() => expect(fetchMock).toHaveBeenCalledOnce());
     expect(JSON.parse(fetchMock.mock.calls[0][1].body).instagram).toBe("");
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body).businessType).toBe("");
     await waitFor(() => expect(screen.getByRole("button", { name: /send another/i })).toBeInTheDocument());
   });
 
@@ -51,6 +52,7 @@ describe("InquiryForm", () => {
     render(<InquiryForm />);
 
     expect(screen.getByLabelText(/full name/i)).toHaveAttribute("aria-required", "true");
+    expect(screen.getByLabelText(/business type \/ industry/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/instagram username/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email address/i)).toHaveAttribute("type", "email");
     expect(screen.getByLabelText(/project details/i)).toBeInTheDocument();
@@ -99,6 +101,7 @@ describe("InquiryForm", () => {
     fetchMock.mockResolvedValue(jsonResponse({ ok: true }));
     render(<InquiryForm />);
     await fillValidForm(user);
+    await user.type(screen.getByLabelText(/business type \/ industry/i), "Online store");
     now = 9000;
 
     await user.click(screen.getByRole("button", { name: /send inquiry/i }));
@@ -108,6 +111,7 @@ describe("InquiryForm", () => {
     expect(url).toBe("/api/inquiry");
     expect(JSON.parse(init.body)).toMatchObject({
       fullName: "Test Client",
+      businessType: "Online store",
       instagram: "test.client",
       email: "test@example.com",
       services: [services[2].id],
@@ -117,6 +121,7 @@ describe("InquiryForm", () => {
 
     await user.click(screen.getByRole("button", { name: /send another inquiry/i }));
     expect(screen.getByLabelText(/full name/i)).toHaveValue("");
+    expect(screen.getByLabelText(/business type \/ industry/i)).toHaveValue("");
   });
 
   it("shows a loading state and sends only once when clicked repeatedly", async () => {

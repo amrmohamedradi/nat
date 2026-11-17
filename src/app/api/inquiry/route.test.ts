@@ -67,6 +67,14 @@ describe("POST /api/inquiry", () => {
     expect(email.text).toContain("Instagram: @test.client");
   });
 
+  it("passes the business type through to Nat's email", async () => {
+    const { POST } = await loadRoute();
+    const res = await POST(post({ ...validBody, businessType: "  Food & drink  " }));
+    expect(res.status).toBe(200);
+    expect(send.mock.calls[0][0].text).toContain("Business type / industry: Food & drink");
+    expect(send.mock.calls[0][0].html).toContain("Food &amp; drink");
+  });
+
   it("returns field errors and sends nothing when the data is invalid", async () => {
     const { POST } = await loadRoute();
 

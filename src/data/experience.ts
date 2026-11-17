@@ -46,3 +46,8 @@ export const inquiryNext = {
 export type Testimonial = { quote: string; name: string; context: string };
 // Add approved client words here. No empty section is shown to visitors.
 export const testimonials: Testimonial[] = [];
+
+export const inquiryBusinessType = {
+  label: "Business type / industry",
+  placeholder: "e.g. Retail, food, personal brand",
+};
